@@ -1,36 +1,66 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Product } from './api/models/Product'; // Adjust path as necessary
-import { getAllProducts, getUserProducts } from './api/services/product-service'; // Adjust path as necessary
+import { getAllProducts, getUserProducts, addProductToUser } from './api/services/product-service'; // Adjust path as necessary
 
 export default function ProductsPage(): JSX.Element {
   const { id } = useParams<{ id: string }>();
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [userProducts, setUserProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-      getAllProducts()
-        .then((response) => {
-          setAllProducts(response);
+    setLoading(true);
+    getAllProducts()
+      .then((response) => {
+        setAllProducts(response);
+        console.log('All products:', response);
+        if (id) {
+          return getUserProducts(id);
+        } else {
+          return [];
+        }
+      })
+      .then((userProductsResponse) => {
+        setUserProducts(userProductsResponse);
+      })
+      .catch((error) => {
+        console.error('Error fetching products:', error);
+        setError('Error fetching products');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [id]);
+
+  const handleAddProduct = (product: Product) => {
+    if (id) {
+      addProductToUser({
+        userId: id,
+        name: product.name,
+        price: product.price,
+        quantity: 1, // Set the quantity to 1 or prompt the user for quantity
+      })
+        .then(() => {
+          return getUserProducts(id);
+        })
+        .then((updatedUserProducts) => {
+          setUserProducts(updatedUserProducts);
         })
         .catch((error) => {
-          console.error('Error fetching all products:', error);
+          console.error('Error adding product:', error);
+          setError('Error adding product');
         });
-      getUserProducts(id ? id : '')
-        .then((res) => {
-          setUserProducts(res);
-        })
-        .catch((error) => {
-          console.error('Error fetching user-specific products:', error);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-  }, []);
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
   }
 
   return (
@@ -41,8 +71,14 @@ export default function ProductsPage(): JSX.Element {
           {allProducts.length > 0 ? (
             allProducts.map((product) => (
               <div key={product.id} className="p-4 bg-gray-800 rounded-lg">
-                <h2 className="text-xl font-semibold">{product.name}</h2>                
+                <h2 className="text-xl font-semibold">{product.name}</h2>
                 <p className="text-indigo-300">Price: ${product.price}</p>
+                <button
+                  onClick={() => handleAddProduct(product)}
+                  className="mt-4 px-4 py-2 bg-indigo-600 rounded hover:bg-indigo-700"
+                >
+                  Add to My Products
+                </button>
               </div>
             ))
           ) : (

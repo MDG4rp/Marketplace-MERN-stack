@@ -18,12 +18,12 @@ const ProductSchema = mongoose.Schema(
     },
     image: {
       type: String,
-      required: false, // Optional field, no need to specify `required: false`
+      required: false,
     },
   },
   {
-    collection: "products", // Ensure consistent collection naming
-    timestamps: true, // Optional: adds createdAt and updatedAt fields
+    collection: "products",
+    timestamps: true,
   }
 );
 

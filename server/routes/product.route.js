@@ -11,7 +11,7 @@ const {
 } = require("../controllers/products.controller");
 const { adminAuth} = require("../controllers/auth.controller");
 
-// Get all products (possibly for admin or public view)
+// Get all products 
 router.get("/products", getProducts);
 
 // Get all products for a specific user
@@ -24,7 +24,7 @@ router.get("/products/:productId", getProduct);
 router.post("/products", adminAuth, addProduct);
 
 // User adds a product to their own list
-router.post("/users/:id/products", userAddsProduct);
+router.post("/users/:id/products/addProduct", userAddsProduct);
 
 // Admin updates a specific product
 router.put("/products/:productId", adminAuth, updateProduct);
