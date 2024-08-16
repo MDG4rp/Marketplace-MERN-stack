@@ -4,12 +4,10 @@ import register from "./api/services/register-service";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
-
   const navigate = useNavigate();
 
   const [loginInfo, setLoginInfo] = useState<RegisterInfo>({
-    name: "",
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -18,66 +16,35 @@ export default function Register() {
     try {
       await register(loginInfo);
       setLoginInfo({
-        name: "",
-        email: "",
+        username: "",
         password: "",
       });
-      navigate("/dashboard");
+      navigate("/products");
     } catch (error) {
       console.error("Registration failed:", error);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
-        <h1 className="text-2xl font-bold text-center text-gray-900 mb-6">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-purple-500 to-indigo-600">
+      <div className="w-full max-w-md p-8 bg-gray-900 bg-opacity-70 rounded-lg shadow-md">
+        <h1 className="text-2xl font-bold text-center text-white mb-6">
           Register
         </h1>
         <form onSubmit={submitForm} className="space-y-4">
           <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Name
-            </label>
             <input
-              id="name"
+              id="username"
               type="text"
-              value={loginInfo.name}
-              placeholder="Name"
+              value={loginInfo.username}
+              placeholder="username"
               onChange={(e) =>
-                setLoginInfo({ ...loginInfo, name: e.target.value })
+                setLoginInfo({ ...loginInfo, username: e.target.value })
               }
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-white placeholder-gray-400"
             />
           </div>
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={loginInfo.email}
-              placeholder="Email"
-              onChange={(e) =>
-                setLoginInfo({ ...loginInfo, email: e.target.value })
-              }
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
             <input
               id="password"
               type="password"
@@ -86,12 +53,12 @@ export default function Register() {
               onChange={(e) =>
                 setLoginInfo({ ...loginInfo, password: e.target.value })
               }
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-white placeholder-gray-400"
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="w-full bg-indigo-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             Submit
           </button>
