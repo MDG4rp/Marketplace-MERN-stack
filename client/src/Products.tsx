@@ -1,21 +1,29 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Product } from './api/models/Product'; // Adjust path as necessary
-import { getAllProducts, getUserProducts, addProductToUser } from './api/services/product-service'; // Adjust path as necessary
+import { useState, useEffect } from "react";
+import { useParams} from "react-router-dom";
+import Product from "./api/models/Product";
+import {
+  getAllProducts,
+  getUserProducts,
+  addProductToUser,
+} from "./api/services/product-service";
+import useSignOut from 'react-auth-kit/hooks/useSignOut';
+import { useNavigate } from "react-router-dom";
 
-export default function ProductsPage(): JSX.Element {
+export default function Products(): JSX.Element {
   const { id } = useParams<{ id: string }>();
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [userProducts, setUserProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
+  const signOut = useSignOut();
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     setLoading(true);
     getAllProducts()
       .then((response) => {
         setAllProducts(response);
-        console.log('All products:', response);
         if (id) {
           return getUserProducts(id);
         } else {
@@ -26,8 +34,7 @@ export default function ProductsPage(): JSX.Element {
         setUserProducts(userProductsResponse);
       })
       .catch((error) => {
-        console.error('Error fetching products:', error);
-        setError('Error fetching products');
+        console.error("Error fetching products:", error);
       })
       .finally(() => {
         setLoading(false);
@@ -36,11 +43,12 @@ export default function ProductsPage(): JSX.Element {
 
   const handleAddProduct = (product: Product) => {
     if (id) {
+      const quantity = quantities[product.id] || 1; // Default to 1 if no quantity is set
       addProductToUser({
         userId: id,
         name: product.name,
         price: product.price,
-        quantity: 1, // Set the quantity to 1 or prompt the user for quantity
+        quantity,
       })
         .then(() => {
           return getUserProducts(id);
@@ -49,56 +57,104 @@ export default function ProductsPage(): JSX.Element {
           setUserProducts(updatedUserProducts);
         })
         .catch((error) => {
-          console.error('Error adding product:', error);
-          setError('Error adding product');
+          console.error("Error adding product:", error);
         });
     }
+  };
+
+  const handleQuantityChange = (productId: string, quantity: number) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: quantity,
+    }));
+  };
+
+  const handleLogOut = () => {
+    signOut();
+    navigate("/");
   };
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-purple-500 to-indigo-600 text-white">
-      <div className="w-full max-w-5xl p-8 bg-gray-900 bg-opacity-70 rounded-lg">
-        <h1 className="text-3xl font-bold mb-6">All Products</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="bg-gray-100 min-h-screen p-6">
+      <div className="container mx-auto">
+        <button
+          onClick={handleLogOut}
+          className="bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600 transition mb-6"
+        >
+          Logout
+        </button>
+        <h1 className="text-4xl font-extrabold text-gray-800 mb-8">
+          All Products
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {allProducts.length > 0 ? (
-            allProducts.map((product) => (
-              <div key={product.id} className="p-4 bg-gray-800 rounded-lg">
-                <h2 className="text-xl font-semibold">{product.name}</h2>
-                <p className="text-indigo-300">Price: ${product.price}</p>
-                <button
-                  onClick={() => handleAddProduct(product)}
-                  className="mt-4 px-4 py-2 bg-indigo-600 rounded hover:bg-indigo-700"
+            allProducts.map((product1, index) => (
+              <div
+                key={index}
+                className="bg-white shadow-lg rounded-lg overflow-hidden"
+              >
+                <div className="p-6">
+                  <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+                    {product1.name}
+                  </h2>
+                  <p className="text-lg text-gray-600 mb-4">
+                    Price: ${product1.price}
+                  </p>
+                  <input
+                    type="number"
+                    value={quantities[product1.id] || 1}
+                    onChange={(e) =>
+                      handleQuantityChange(product1.id, Number(e.target.value))
+                    }
+                    className="border p-2 mb-4"
+                    min="1"
+                  />
+                  <button
+                    onClick={() => handleAddProduct(product1)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition"
+                  >
+                    Add to My Products
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="col-span-full text-center text-gray-600">
+              No products available.
+            </p>
+          )}
+        </div>
+        {userProducts.length > 0 && (
+          <>
+            <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">
+              Your Products
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {userProducts.map((product, index) => (
+                <div
+                  key={index}
+                  className="bg-white shadow-lg rounded-lg overflow-hidden"
                 >
-                  Add to My Products
-                </button>
-              </div>
-            ))
-          ) : (
-            <p>No products available.</p>
-          )}
-        </div>
-
-        <h1 className="text-3xl font-bold mt-12 mb-6">Your Products</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {userProducts.length > 0 ? (
-            userProducts.map((product) => (
-              <div key={product.id} className="p-4 bg-gray-800 rounded-lg">
-                <h2 className="text-xl font-semibold">{product.name}</h2>
-                <p className="text-indigo-300">Price: ${product.price}</p>
-              </div>
-            ))
-          ) : (
-            <p>You have no products.</p>
-          )}
-        </div>
+                  <div className="p-6">
+                    <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+                      {product.name}
+                    </h2>
+                    <p className="text-lg text-gray-600 mb-4">
+                      Price: ${product.price}
+                    </p>
+                    <p className="text-lg text-gray-600 mb-4">
+                      Quantity: {product.quantity}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

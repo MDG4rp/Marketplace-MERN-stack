@@ -1,8 +1,8 @@
 import { useState } from "react";
 import RegisterInfo from "./api/models/RegisterInfo";
 import register from "./api/services/register-service";
+import login from "./api/services/login-service";
 import { useNavigate } from "react-router-dom";
-
 export default function Register() {
   const navigate = useNavigate();
 
@@ -19,7 +19,10 @@ export default function Register() {
         username: "",
         password: "",
       });
-      navigate("/products");
+      const response = await login(loginInfo);
+      navigate(`/products`);
+  
+      console.log("response: ", response);
     } catch (error) {
       console.error("Registration failed:", error);
     }

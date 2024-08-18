@@ -1,45 +1,59 @@
+import Product from "../models/Product";
 import { axiosInstance } from "@/lib/axios";
+
 const api = import.meta.env.VITE_API_URL;
 
-export async function getAllProducts() {
-  try {
-    const response = await axiosInstance.get(`${api}/products`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching all products:", error);
-    throw error;
-  }
+export function getAllProducts() {
+  return axiosInstance.get(`${api}/products`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      console.error("Error fetching all products:", error);
+      throw error;
+    });
 }
 
-export async function getUserProducts(userId: string) {
-  try {
-    const response = await axiosInstance.get(`${api}/users/${userId}/products`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching user products:", error);
-    throw error;
-  }
+export function getUserProducts(userId: string) {
+  return axiosInstance.get(`${api}/users/${userId}/products`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      console.error("Error fetching user products:", error);
+      throw error;
+    });
 }
 
-export async function addProductToUser({
-  userId,
-  name,
-  price,
-  quantity,
-}: {
-  userId: string;
-  name: string;
-  price: number;
-  quantity: number;
-}) {
-  try {
-    const response = await axiosInstance.post(
-      `${api}/users/${userId}/products/addProduct`,
-      { name, price, quantity }
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error adding product to user:", error);
-    throw error;
-  }
+export function addProductToUser({ userId, name, price, quantity }: { userId: string; name: string; price: number; quantity: number; }) {
+  return axiosInstance.post(`${api}/users/${userId}/products/addProduct`, { name, price, quantity })
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      console.error("Error adding product to user:", error);
+      throw error;
+    });
+}
+
+export function deleteProduct(productId: string) {
+  return axiosInstance.delete(`${api}/products/${productId}`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      console.error("Error deleting product:", error);
+      throw error;
+    });
+}
+
+export function addProduct(newProduct: Product) {
+  return axiosInstance.post(`${api}/products`, newProduct)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      console.error("Error adding product:", error);
+      throw error;
+    });
 }

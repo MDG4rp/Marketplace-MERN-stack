@@ -1,13 +1,25 @@
-import axios, { AxiosInstance } from "axios";
+import axios from "axios";
 
-const axiosInstance: AxiosInstance = axios.create();
+export const axiosInstance = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
-const setAuthToken = (token: string | null) => {
-  if (token) {
-    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  } else {
-    delete axiosInstance.defaults.headers.common["Authorization"];
+axiosInstance.interceptors.request.use(
+  function (config) {
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
   }
-};
-
-export { axiosInstance, setAuthToken };
+);
+axiosInstance.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);

@@ -10,6 +10,9 @@ const ProductSchema = mongoose.Schema(
       type: Number,
       required: true,
       default: 0,
+      validate(value) {
+        if (value < 0) throw new Error("Quantity cannot be negative");
+      }
     },
     price: {
       type: Number,

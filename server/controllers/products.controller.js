@@ -1,9 +1,16 @@
 const { Product } = require("../models/product.model");
 const User = require("../models/user.model");
+require('dotenv').config();
+
+const api = process.env.API_URL;
+
 const getProducts = async (req, res) => {
   try {
     const products = await Product.find({});
-    res.status(200).json(products);
+    res.status(200).json({
+      products: products,
+      message: "Products fetched successfully",
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -39,8 +46,26 @@ const getProduct = async (req, res) => {
 
 const addProduct = async (req, res) => {
   try {
-    const product = await Product.create(req.body);
-    res.status(201).json(product);
+   
+    let product = await Product.findOne({ name: req.body.name });
+
+    const quantityToAdd = Number(req.body.quantity);
+
+    if (product) {
+     
+      product.quantity += quantityToAdd;
+      await product.save();
+      res.status(200).json(product);
+    } else {
+     
+      product = new Product({
+        name: req.body.name,
+        quantity: quantityToAdd,
+        price: req.body.price,
+      });
+      await product.save();
+      res.status(201).json(product);
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -49,12 +74,26 @@ const addProduct = async (req, res) => {
 const userAddsProduct = async (req, res) => {
   try {
     const { id } = req.params;
+    const { name, quantity, price } = req.body;
+
     const user = await User.findById(id);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    user.products.push(req.body);
+
+    const existingProduct = user.products.find((product) => product.name === name);
+
+    if (existingProduct) {
+      existingProduct.quantity += Number(quantity);
+    } else {
+      user.products.push({
+        name,
+        quantity: Number(quantity),
+        price,
+      });
+    }
+
     await user.save();
     res.status(201).json({ message: 'Product added successfully', product: req.body });
   } catch (error) {
@@ -77,11 +116,13 @@ const updateProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
   try {
-    const { id } = req.params;
+    const {id} = req.params;
     const product = await Product.findByIdAndDelete(id);
+
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
+
     res.status(200).json({ message: "Product deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });

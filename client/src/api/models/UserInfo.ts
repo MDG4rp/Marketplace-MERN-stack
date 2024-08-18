@@ -1,5 +1,5 @@
-export interface UserInfo {
-  mssage: string;
+export default interface UserInfo {
   id: string;
-  username: string;
+  name: string;
+  role:string
 }
