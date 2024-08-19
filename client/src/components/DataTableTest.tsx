@@ -41,8 +41,7 @@ const handleDeleteUser = (userId: string) => {
     console.log(res)
   })}
 
-export const columns: ColumnDef<UserInfo>[] = [
-  {
+const columns: ColumnDef<UserInfo>[] = [  {
     accessorKey: "userID",
     header: "userID",
     cell: ({ row }) => (
