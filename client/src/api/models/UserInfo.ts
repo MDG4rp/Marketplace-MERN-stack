@@ -1,5 +1,9 @@
 export default interface UserInfo {
-  id: string;
-  name: string;
-  role:string
+  _id: string;
+  username: string;
+  role:string,
+  name: string,
+  products: string[],
+  updatedAt: string,
+  createdAt: string,
 }

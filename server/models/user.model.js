@@ -2,6 +2,13 @@ const mongoose = require("mongoose");
 const ProductSchema = require("./product.model").ProductSchema;
 
 const UserSchema = new mongoose.Schema({
+  id: {
+    type: String,
+    unique: true,
+  },
+  name:{ 
+    type: String
+  },
   username: {
     type: String,
     required: true,

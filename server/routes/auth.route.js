@@ -3,7 +3,6 @@ const router = express.Router();
 const {
   register,
   login,
-  logout,
   getAllUsers,
   deleteUser,
 } = require("../controllers/auth.controller");
@@ -17,10 +16,7 @@ router.post("/login", login);
 // Route to get all users
 router.get("/userslist", getAllUsers);
 
-/* // Route to delete a user
+// Route to delete a user
 router.delete("/deleteUser/:id", deleteUser); 
-
-// Route for user logout
-router.post("/logout", logout); */
 
 module.exports = router;
