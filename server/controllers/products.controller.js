@@ -73,17 +73,32 @@ const addProduct = async (req, res) => {
 
 const userAddsProduct = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { name, quantity, price } = req.body;
+    const { id } = req.params; // ID dell'utente
+    const { name, quantity, price } = req.body; // Dati del prodotto
 
+    // Trova l'utente nel database
     const user = await User.findById(id);
-
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const existingProduct = user.products.find((product) => product.name === name);
+    // Trova il prodotto nel negozio (DB)
+    const storeProduct = await Store.findOne({ name });
+    if (!storeProduct) {
+      return res.status(404).json({ message: 'Product not found in store' });
+    }
 
+    // Verifica se la quantità richiesta è disponibile
+    if (storeProduct.quantity < quantity) {
+      return res.status(400).json({ message: 'Not enough quantity available in store' });
+    }
+
+    // Rimuovi la quantità dal negozio
+    storeProduct.quantity -= quantity;
+    await storeProduct.save();
+
+    // Aggiungi il prodotto all'utente
+    const existingProduct = user.products.find((product) => product.name === name);
     if (existingProduct) {
       existingProduct.quantity += Number(quantity);
     } else {
@@ -94,9 +109,13 @@ const userAddsProduct = async (req, res) => {
       });
     }
 
+    // Salva le modifiche all'utente
     await user.save();
+
+    // Risposta di successo
     res.status(201).json({ message: 'Product added successfully', product: req.body });
   } catch (error) {
+    // Gestione degli errori
     res.status(500).json({ message: error.message });
   }
 };

@@ -1,3 +1,5 @@
+"use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -14,15 +16,17 @@ import {
 import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
+  name: z.string().min(1, {
+    message: "Name must be at least 1 character",
   }),
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  password: z.string().min(6, {
-    message: "Password must be at least 6 characters.",
-  }),
+  price: z
+    .string()
+    .min(1, { message: "Price must be at least 1" })
+    .transform((value) => Number(value)),
+  quantity: z
+    .string()
+    .min(1, { message: "Quantity must be at least 1" })
+    .transform((value) => Number(value)),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -31,13 +35,13 @@ interface ProfileFormProps {
   onSubmit: (data: FormData) => void;
 }
 
-export function RegisterForm({ onSubmit }: ProfileFormProps) {
+export default function AddProductForm({ onSubmit }: ProfileFormProps) {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      username: "",
-      password: "",
+      price: 0,
+      quantity: 0,
     },
   });
 
@@ -52,33 +56,14 @@ export function RegisterForm({ onSubmit }: ProfileFormProps) {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-medium">
-                Name
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Enter your name"
-                  {...field}
-                  className="mt-1 block w-full text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-xs"
-                />
-              </FormControl>
-              <FormMessage className="text-red-500 text-xs mt-1" />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-sm font-medium ">
+              <FormLabel className="text-sm font-medium text-gray-700">
                 Username
               </FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Enter your username"
+                  placeholder="Enter the name of the new product"
                   {...field}
-                  className="mt-1 block w-full text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-xs"
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-xs"
                 />
               </FormControl>
               <FormMessage className="text-red-500 text-xs mt-1" />
@@ -87,16 +72,36 @@ export function RegisterForm({ onSubmit }: ProfileFormProps) {
         />
         <FormField
           control={form.control}
-          name="password"
+          name="price"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-medium">
-                Password
+              <FormLabel className="text-sm font-medium text-gray-700">
+                Price
               </FormLabel>
               <FormControl>
                 <Input
-                  type="password"
-                  placeholder="Enter your password"
+                  type="number"
+                  placeholder="Enter the price"
+                  {...field}
+                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-xs"
+                />
+              </FormControl>
+              <FormMessage className="text-red-500 text-xs mt-1" />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="quantity"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-medium text-gray-700">
+                Quantity
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  placeholder="Enter the quantity"
                   {...field}
                   className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-xs"
                 />
@@ -107,9 +112,9 @@ export function RegisterForm({ onSubmit }: ProfileFormProps) {
         />
         <Button
           type="submit"
-          className="w-full py-2 px-4 bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-xs"
+          className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-xs"
         >
-          Register
+          Add Product
         </Button>
       </form>
     </Form>

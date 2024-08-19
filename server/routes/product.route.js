@@ -11,8 +11,8 @@ const {
 // Get all products 
 router.get("/products", getProducts);
 
-/* // Get all products for a specific user
-router.get("/users/:id/products", getUserProducts);
+// Get all products for a specific user
+router.get("/:id/products", getUserProducts);
 
 // Admin creates a new product
 router.post("/products", addProduct);
@@ -21,6 +21,6 @@ router.post("/products", addProduct);
 router.post("/products/addProduct", userAddsProduct);
 
 // Admin deletes a specific product
-router.delete("/products/:id", deleteProduct); */
+router.delete("/products/:id", deleteProduct);
 
 module.exports = router;

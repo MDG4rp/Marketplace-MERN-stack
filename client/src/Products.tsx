@@ -23,7 +23,8 @@ export default function Products(): JSX.Element {
     setLoading(true);
     getAllProducts()
       .then((response) => {
-        setAllProducts(response);
+        setAllProducts(response.products);
+        console.log(response);
         if (id) {
           return getUserProducts(id);
         } else {

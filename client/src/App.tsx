@@ -7,6 +7,7 @@ import Login from "./Login";
 import Products from "./Products";
 import AdminDashboard from "./AdminDashboard";
 import AdminManagement from "./AdminManagement";
+import { DataTableDemo } from "./components/DataTableTest";
 import refresh from "@/lib/refresh";
 const store = createStore({
   authName: "_auth",

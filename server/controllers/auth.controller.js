@@ -35,7 +35,7 @@ const register = async (req, res, next) => {
       jwt: accessToken,
       refreshToken: refreshToken,
       id: user._id,
-      name: user.username,
+      username: user.username,
       role: user.role,
       name: user.name,
     });
@@ -86,7 +86,7 @@ const login = async (req, res) => {
 const getAllUsers = async (req, res, next) => {
   try {
     const users = await User.find({}).select("-password");
-    res.status(200).json(users);
+    res.status(200).json({ message: "Users retrieved", users: users });
   } catch (error) {
     next(error);
   }

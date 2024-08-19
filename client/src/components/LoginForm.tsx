@@ -50,14 +50,14 @@ export function LoginForm({ onSubmit }: ProfileFormProps) {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-medium text-gray-700">
+              <FormLabel className="text-sm font-medium">
                 Username
               </FormLabel>
               <FormControl>
                 <Input
                   placeholder="Enter your username"
                   {...field}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-xs"
+                  className="mt-1 block w-full text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-xs"
                 />
               </FormControl>
               <FormMessage className="text-red-500 text-xs mt-1" />
@@ -69,7 +69,7 @@ export function LoginForm({ onSubmit }: ProfileFormProps) {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-medium text-gray-700">
+              <FormLabel className="text-sm font-medium">
                 Password
               </FormLabel>
               <FormControl>
@@ -77,7 +77,7 @@ export function LoginForm({ onSubmit }: ProfileFormProps) {
                   type="password"
                   placeholder="Enter your password"
                   {...field}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-xs"
+                  className="mt-1 block w-full text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-xs"
                 />
               </FormControl>
               <FormMessage className="text-red-500 text-xs mt-1" />
@@ -86,7 +86,7 @@ export function LoginForm({ onSubmit }: ProfileFormProps) {
         />
         <Button
           type="submit"
-          className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-xs"
+          className="w-full py-2 px-4 bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-xs"
         >
           Login
         </Button>

@@ -15,7 +15,7 @@ export function getAllProducts() {
 }
 
 export function getUserProducts(userId: string) {
-  return axiosInstance.get(`${api}/users/${userId}/products`)
+  return axiosInstance.get(`${api}/${userId}/products`)
     .then(response => {
       return response.data;
     })

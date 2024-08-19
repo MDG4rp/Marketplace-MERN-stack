@@ -9,13 +9,22 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import UserInfo from "@/api/models/UserInfo";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 
 interface AdminTableProps {
     users: UserInfo[];
     onDeleteUser: (userId: string) => void;
 }
 
-const AdminTable: React.FC<AdminTableProps> = ({ users, onDeleteUser }) => {
+type authUser = {
+    name: string;
+    id: string;
+    role: string;
+};
+
+const UsersListTable: React.FC<AdminTableProps> = ({ users, onDeleteUser }) => {
+    const authUser = useAuthUser<authUser>();
+
     return (
         <div className="overflow-x-auto">
             <Table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden text-center">
@@ -35,12 +44,14 @@ const AdminTable: React.FC<AdminTableProps> = ({ users, onDeleteUser }) => {
                             <TableCell className="py-3 px-4">{user.username}</TableCell>
                             <TableCell className="py-3 px-4">{user.role}</TableCell>
                             <TableCell className="py-3 px-4 text-right">
-                                <button
-                                    onClick={() => onDeleteUser(user._id)}
-                                    className="text-red-500 hover:text-red-700"
-                                >
-                                    Delete
-                                </button>
+                                {authUser?.id !== user._id && (
+                                    <button
+                                        onClick={() => onDeleteUser(user._id)}
+                                        className="text-red-500 hover:text-red-700"
+                                    >
+                                        Delete
+                                    </button>
+                                )}
                             </TableCell>
                         </TableRow>
                     ))}
@@ -48,6 +59,6 @@ const AdminTable: React.FC<AdminTableProps> = ({ users, onDeleteUser }) => {
             </Table>
         </div>
     );
-}
+};
 
-export default AdminTable;
+export default UsersListTable;

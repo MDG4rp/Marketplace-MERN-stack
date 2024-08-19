@@ -67,14 +67,15 @@ export default function Login(): JSX.Element {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="mx-auto p-4 wp h-screen flex flex-col items-center justify-center">
       <h1 className="text-4xl font-bold text-center mb-8">Welcome Back!</h1>
-      <div className="flex justify-center items-start space-x-8 border-l border-gray-300">
-        <div className="flex flex-col items-center text-center w-1/2">
+      <div className="flex flex-col md:flex-row items-start">
+        <div className="flex flex-col items-center text-center md:w-1/2 md:pr-4 mb-6 md:mb-0">
           <h2 className="text-lg font-semibold mb-4">Login</h2>
           <LoginForm onSubmit={onLoginSubmit} />
         </div>
-        <div className="flex flex-col items-center text-center w-1/2">
+        <div className="border-t md:border-l border-gray-400 md:h-[250px] h-[250px] self-center mx-0 md:mx-6"></div>
+        <div className="flex flex-col items-center text-center md:w-1/2 md:pl-4 mb-6 md:mb-0">
           <h2 className="text-lg font-semibold mb-4">Register</h2>
           <RegisterForm onSubmit={onRegisterSubmit} />
         </div>
