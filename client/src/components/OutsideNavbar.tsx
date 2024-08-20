@@ -14,10 +14,10 @@ const Navbar: React.FC = () => {
   const auth = useAuthUser<AuthUser>();
 
   return (
-    <nav className="p-4 transition-colors duration-300 bg-gray-100 dark:bg-gray-800">
+    <nav className="p-4 shadow-md transition-colors duration-300 bg-white dark:bg-gray-800">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="flex items-center">
-          <div className="text-lg font-bold transition-colors duration-300 text-gray-900 dark:text-white mr-4">
+        <div className="flex items-center space-x-4">
+          <div className="text-lg font-bold transition-colors duration-300 text-gray-900 dark:text-white">
             MyApp
           </div>
           <ModeToggle />

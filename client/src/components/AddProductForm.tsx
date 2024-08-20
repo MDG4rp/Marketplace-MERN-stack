@@ -49,21 +49,21 @@ export default function AddProductForm({ onSubmit }: ProfileFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="max-w-sm mx-auto space-y-4 rounded-lg"
+        className="max-w-sm mx-auto space-y-6 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md"
       >
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-medium text-gray-700">
-                Username
+              <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Product Name
               </FormLabel>
               <FormControl>
                 <Input
                   placeholder="Enter the name of the new product"
                   {...field}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-xs"
+                  className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-200 sm:text-xs"
                 />
               </FormControl>
               <FormMessage className="text-red-500 text-xs mt-1" />
@@ -75,7 +75,7 @@ export default function AddProductForm({ onSubmit }: ProfileFormProps) {
           name="price"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-medium text-gray-700">
+              <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 Price
               </FormLabel>
               <FormControl>
@@ -83,7 +83,7 @@ export default function AddProductForm({ onSubmit }: ProfileFormProps) {
                   type="number"
                   placeholder="Enter the price"
                   {...field}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-xs"
+                  className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-200 sm:text-xs"
                 />
               </FormControl>
               <FormMessage className="text-red-500 text-xs mt-1" />
@@ -95,7 +95,7 @@ export default function AddProductForm({ onSubmit }: ProfileFormProps) {
           name="quantity"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-medium text-gray-700">
+              <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 Quantity
               </FormLabel>
               <FormControl>
@@ -103,7 +103,7 @@ export default function AddProductForm({ onSubmit }: ProfileFormProps) {
                   type="number"
                   placeholder="Enter the quantity"
                   {...field}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-xs"
+                  className="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-200 sm:text-xs"
                 />
               </FormControl>
               <FormMessage className="text-red-500 text-xs mt-1" />
@@ -112,7 +112,7 @@ export default function AddProductForm({ onSubmit }: ProfileFormProps) {
         />
         <Button
           type="submit"
-          className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-xs"
+          className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-xs"
         >
           Add Product
         </Button>

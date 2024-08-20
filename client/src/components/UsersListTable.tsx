@@ -39,14 +39,14 @@ const UsersListTable: React.FC<AdminTableProps> = ({ users, onDeleteUser }) => {
                 </TableHeader>
                 <TableBody>
                     {users.map((user) => (
-                        <TableRow key={user._id} className="border-t hover:bg-gray-50">
-                            <TableCell className="py-3 px-4 font-medium">{user._id}</TableCell>
+                        <TableRow key={user.userID} className="border-t hover:bg-gray-50">
+                            <TableCell className="py-3 px-4 font-medium">{user.userID}</TableCell>
                             <TableCell className="py-3 px-4">{user.username}</TableCell>
                             <TableCell className="py-3 px-4">{user.role}</TableCell>
                             <TableCell className="py-3 px-4 text-right">
-                                {authUser?.id !== user._id && (
+                                {authUser?.id !== user.userID && (
                                     <button
-                                        onClick={() => onDeleteUser(user._id)}
+                                        onClick={() => onDeleteUser(user.userID)}
                                         className="text-red-500 hover:text-red-700"
                                     >
                                         Delete

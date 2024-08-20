@@ -1,5 +1,3 @@
-"use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -43,21 +41,21 @@ export function LoginForm({ onSubmit }: ProfileFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="max-w-sm mx-auto space-y-4 rounded-lg"
+        className="max-w-md mx-auto space-y-6 p-8 rounded-lg bg-white dark:bg-gray-900 shadow-md"
       >
         <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-medium">
+              <FormLabel className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                 Username
               </FormLabel>
               <FormControl>
                 <Input
                   placeholder="Enter your username"
                   {...field}
-                  className="mt-1 block w-full text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-xs"
+                  className="mt-1 block w-full bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </FormControl>
               <FormMessage className="text-red-500 text-xs mt-1" />
@@ -69,7 +67,7 @@ export function LoginForm({ onSubmit }: ProfileFormProps) {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-medium">
+              <FormLabel className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                 Password
               </FormLabel>
               <FormControl>
@@ -77,7 +75,7 @@ export function LoginForm({ onSubmit }: ProfileFormProps) {
                   type="password"
                   placeholder="Enter your password"
                   {...field}
-                  className="mt-1 block w-full text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-xs"
+                  className="mt-1 block w-full bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </FormControl>
               <FormMessage className="text-red-500 text-xs mt-1" />
@@ -86,7 +84,7 @@ export function LoginForm({ onSubmit }: ProfileFormProps) {
         />
         <Button
           type="submit"
-          className="w-full py-2 px-4 bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-xs"
+          className="w-full py-2 px-4 bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-md hover:from-blue-600 hover:to-teal-600 transition-colors duration-300"
         >
           Login
         </Button>

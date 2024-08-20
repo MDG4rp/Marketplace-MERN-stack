@@ -4,10 +4,10 @@ import Navbar from "./Navbar";
 
 const Layout: React.FC = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col  h-screen transition-colors duration-300 bg-gray-100 dark:bg-gray-800">
       <Navbar />
-      <div className="flex flex-1">
-        <main className="flex-1 p-4 bg-gray-100 overflow-auto">
+      <div className="flex flex-1 flex-col">
+        <main className=" flex-grow transition-colors duration-300 bg-grey-100 dark:bg-gray-800">
           <Outlet />
         </main>
       </div>

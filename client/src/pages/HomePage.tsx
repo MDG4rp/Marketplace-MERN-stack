@@ -1,30 +1,34 @@
-import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { DrawerAuth } from "@/components/LoginDrawer";
 
-const HomePage: React.FC = () => {
-  const navigate = useNavigate();
-
-  const handleGetStarted = () => {
-    navigate('/login');
-  };
-
+export default function HomePage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-center">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white text-center">
       <div className="p-8">
-        <h1 className="text-5xl font-bold mb-4">
-          Welcome to my app
-        </h1>
-        <p className="text-lg mb-8">
-          Test Description
-        </p>
-        <button
-          onClick={handleGetStarted}
-          className="bg-white text-blue-500 px-6 py-3 rounded-lg shadow-lg font-semibold hover:bg-gray-100 transition duration-300"
+        <motion.h1
+          className="text-5xl font-bold mb-4"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
         >
-          Get Started
-        </button>
+          Welcome to my app
+        </motion.h1>
+        <motion.p
+          className="text-lg mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+        >
+          Test Description
+        </motion.p>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 1 }}
+        >
+          <DrawerAuth />
+        </motion.div>
       </div>
     </div>
   );
-};
-
-export default HomePage;
+}

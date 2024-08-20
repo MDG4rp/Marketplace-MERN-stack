@@ -23,7 +23,7 @@ export default function Products(): JSX.Element {
     setLoading(true);
     getAllProducts()
       .then((response) => {
-        setAllProducts(response.products);
+        setAllProducts(response);
         console.log(response);
         if (id) {
           return getUserProducts(id);
@@ -44,7 +44,7 @@ export default function Products(): JSX.Element {
 
   const handleAddProduct = (product: Product) => {
     if (id) {
-      const quantity = quantities[product.id] || 1; // Default to 1 if no quantity is set
+      const quantity = quantities[product.id?product.id:1]; // Default to 1 if no quantity is set
       addProductToUser({
         userId: id,
         name: product.name,
@@ -107,9 +107,9 @@ export default function Products(): JSX.Element {
                   </p>
                   <input
                     type="number"
-                    value={quantities[product1.id] || 1}
+                    value={quantities[product1.id?product1.id:""]}
                     onChange={(e) =>
-                      handleQuantityChange(product1.id, Number(e.target.value))
+                      handleQuantityChange(product1.id?product1.id:"", Number(e.target.value))
                     }
                     className="border p-2 mb-4"
                     min="1"

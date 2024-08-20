@@ -1,17 +1,19 @@
 import Product from "../models/Product";
 import { axiosInstance } from "@/lib/axios";
-
+import mapProducts from "../mappers/products-mapper";
 const api = import.meta.env.VITE_API_URL;
 
 export function getAllProducts() {
   return axiosInstance.get(`${api}/products`)
-    .then(response => {
-      return response.data;
-    })
-    .catch(error => {
-      console.error("Error fetching all products:", error);
-      throw error;
-    });
+  .then((response) => {
+    const mappedResponse = mapProducts(response.data);
+    console.log("mapped: ", mappedResponse.products);
+    return mappedResponse.products;
+  })
+  .catch((error) => {
+    console.error("Error fetching products:", error);
+    throw error;
+  });
 }
 
 export function getUserProducts(userId: string) {
@@ -54,6 +56,16 @@ export function addProduct(newProduct: Product) {
     })
     .catch(error => {
       console.error("Error adding product:", error);
+      throw error;
+    });
+}
+export function editProduct(productId: string, updatedProduct: Partial<Product>) {
+  return axiosInstance.put(`${api}/products/${productId}`, updatedProduct)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      console.error("Error editing product:", error);
       throw error;
     });
 }
