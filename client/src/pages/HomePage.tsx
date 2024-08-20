@@ -4,7 +4,7 @@ const HomePage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    navigate('/login'); // Modifica il percorso se necessario
+    navigate('/login');
   };
 
   return (
