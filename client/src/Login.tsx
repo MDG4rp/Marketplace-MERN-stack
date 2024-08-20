@@ -46,7 +46,7 @@ export default function Login(): JSX.Element {
           ] = `Bearer ${jwt}`;
           console.log("SignIn successful, navigating...");
           if (role === "admin") {
-            navigate("/userslist");
+            navigate("/admin");
           } else {
             navigate("/products");
           }

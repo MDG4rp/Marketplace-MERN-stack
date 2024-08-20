@@ -7,8 +7,10 @@ import Login from "./Login";
 import Products from "./Products";
 import AdminDashboard from "./AdminDashboard";
 import AdminManagement from "./AdminManagement";
-import { DataTableDemo } from "./components/DataTableTest";
 import refresh from "@/lib/refresh";
+import Layout from "./components/Layout";
+import HomePage from "./pages/HomePage"; // Importa il componente HomePage
+
 const store = createStore({
   authName: "_auth",
   authType: "cookie",
@@ -22,11 +24,14 @@ export default function App() {
     <AuthProvider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route element={<AuthOutlet fallbackPath="/" />}>
-            <Route path="/userslist" element={<AdminManagement />} />
-            <Route path="/productslist" element={<AdminDashboard />} />
-            <Route path="/products" element={<Products />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Layout />}>
+            <Route element={<AuthOutlet fallbackPath="/" />}>
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/adminManagement" element={<AdminManagement />} />
+              <Route path="/products" element={<Products />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
