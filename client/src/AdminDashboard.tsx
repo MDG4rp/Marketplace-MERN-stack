@@ -1,17 +1,23 @@
 import { useState, useEffect } from "react";
-import { getAllProducts, deleteProduct} from "./api/services/product-service";
+import { getAllProducts, deleteProduct } from "./api/services/product-service";
 import Product from "./api/models/Product";
 import ProductTable from "@/components/ProductsTable"; // Ensure the import path is correct
 
 export default function AdminDashboard(): JSX.Element {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>([
+    {
+      id: "",
+      name: "",
+      price: 0,
+      quantity: 0,
+    },
+  ]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
-  // Function to fetch products
   const fetchProducts = async () => {
     try {
       const response = await getAllProducts();
@@ -40,7 +46,7 @@ export default function AdminDashboard(): JSX.Element {
       </div>
     );
   }
-  function onProdutChange(){
+  function onProdutChange() {
     fetchProducts();
   }
 
@@ -48,7 +54,7 @@ export default function AdminDashboard(): JSX.Element {
     <div className="p-7 mx-8 rounded-lg bg-gray-200 dark:bg-gray-900">
       <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg">
         <ProductTable
-        onProductChange={onProdutChange}
+          onProductChange={onProdutChange}
           products={products}
           onDeleteProduct={handleDeleteProduct}
         />

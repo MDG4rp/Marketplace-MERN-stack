@@ -29,8 +29,8 @@ export default function App() {
               <Route path="/login" element={<Login />} />
             <Route path="/" element={<Layout />}>
               <Route element={<AuthOutlet fallbackPath="/login" />}>
-                <Route path="/admin" element={<AdminDashboard />} />
-                <Route path="/adminManagement" element={<AdminManagement />} />
+                <Route path="/totalProducts" element={<AdminDashboard />} />
+                <Route path="/totalUsers" element={<AdminManagement />} />
                 <Route path="/products" element={<Products />} />
               </Route>
             </Route>

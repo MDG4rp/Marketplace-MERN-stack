@@ -3,33 +3,37 @@ require("dotenv").config();
 const jwtSecret = process.env.JWT_SECRET;
 const refreshTokenSecret = process.env.RTS;
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
-// Register and after login
 const register = async (req, res, next) => {
   const { name, username, password } = req.body;
+
   try {
-    // Controlla se l'utente esiste già
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       return res.status(400).json({ message: "Username already exists" });
     }
 
-    // Crea un nuovo utente
-    const user = await User.create({ name, username, password });
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Genera i token
+    const user = await User.create({
+      name,
+      username,
+      password: hashedPassword,
+    });
+
     const accessToken = jwt.sign(
       { id: user._id, name: name, username: username, role: user.role },
       jwtSecret,
       { expiresIn: "15m" }
     );
+
     const refreshToken = jwt.sign(
       { id: user._id, name: name, username: username, role: user.role },
       refreshTokenSecret,
       { expiresIn: "1d" }
     );
 
-    // Invia la risposta con i token e le informazioni dell'utente
     res.status(200).json({
       message: "User successfully created",
       jwt: accessToken,
@@ -47,39 +51,45 @@ const register = async (req, res, next) => {
 // Login
 const login = async (req, res) => {
   const { username, password } = req.body;
-  const user = await User.findOne({ username }).catch((error) => {
-    console.log(error);
-  });
 
-  if (!user) {
-    return res.status(400).json({ message: "User not found" });
+  try {
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(400).json({ message: "Invalid password" });
+    }
+
+    const jwtToken = jwt.sign(
+      { id: user._id, username, role: user.role },
+      jwtSecret,
+      { expiresIn: "15m" }
+    );
+
+    const refreshToken = jwt.sign(
+      { id: user._id, username },
+      refreshTokenSecret,
+      { expiresIn: "1d" }
+    );
+
+    res.status(200).json({
+      message: "User successfully logged in",
+      jwt: jwtToken,
+      refreshToken: refreshToken,
+      id: user._id,
+      username: user.username,
+      role: user.role,
+      name: user.name,
+    });
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ message: "An error occurred during login" });
   }
-
-  if (user.password !== password) {
-    return res.status(400).json({ message: "Invalid password" });
-  }
-
-  const jwtToken = jwt.sign(
-    { id: user._id, username, role: user.role },
-    jwtSecret,
-    { expiresIn: "15m" }
-  );
-
-  const refreshToken = jwt.sign(
-    { id: user._id, username },
-    refreshTokenSecret,
-    { expiresIn: "1d" }
-  );
-
-  res.status(200).json({
-    message: "User successfully logged in",
-    jwt: jwtToken,
-    refreshToken: refreshToken,
-    id: user._id,
-    username: user.username,
-    role: user.role,
-    name: user.name,
-  });
 };
 
 // Get all users

@@ -8,7 +8,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Product from "@/api/models/Product";
-import { Button } from "./ui/button";
 import { Trash2 } from "lucide-react";
 import { AddProductDialog } from "@/components/AddProductDialog";
 import { EditProductDialog } from "@/components/EditProductDialog";
@@ -24,9 +23,7 @@ export default function ProductTable({
   onDeleteProduct,
   onProductChange,
 }: ProductTableProps) {
-  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(
-    undefined
-  );
+  const [selectedProduct, setSelectedProduct] = useState<Product>();
 
   const handleOpenAddDialog = (product?: Product) => {
     setSelectedProduct(product);
@@ -51,8 +48,8 @@ export default function ProductTable({
           <TableRow>
             <TableHead>Product ID</TableHead>
             <TableHead>Name</TableHead>
-            <TableHead>Quantity</TableHead>
-            <TableHead>Price</TableHead>
+            <TableHead className="text-center">Quantity</TableHead>
+            <TableHead className="text-center">Price</TableHead>
             <TableHead className="text-center">Edit</TableHead>
             <TableHead className="text-right">Delete</TableHead>
           </TableRow>
@@ -62,23 +59,22 @@ export default function ProductTable({
             <TableRow key={product.id}>
               <TableCell className="font-medium">{product.id}</TableCell>
               <TableCell>{product.name}</TableCell>
-              <TableCell>{product.quantity}</TableCell>
-              <TableCell>{product.price} €</TableCell>
+              <TableCell className="text-center">{product.quantity}</TableCell>
+              <TableCell className="text-center">{product.price} €</TableCell>
               <TableCell className="text-center">
                 <EditProductDialog
-                  product={selectedProduct}
+                  product={product}
                   handleOpenEditDialog={handleOpenEditDialog}
-                  onProducttChange={onProductChange}
+                  onProductChange={onProductChange}
                 />
               </TableCell>
-              <TableCell className="text-right">
-                <Button
+              <TableCell className="flex justify-end">
+                <Trash2
+                  stroke="red"
+                  size={18}
                   onClick={() => product.id && onDeleteProduct(product.id)}
-                  variant="ghost"
-                  className="self-end"
-                >
-                  <Trash2 stroke="red" size={"18"} />
-                </Button>
+                  className="cursor-pointer"
+                />
               </TableCell>
             </TableRow>
           ))}

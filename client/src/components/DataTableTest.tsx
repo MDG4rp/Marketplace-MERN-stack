@@ -61,7 +61,7 @@ const columns: ColumnDef<UserInfo>[] = [  {
         </Button>
       )
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("name")}</div>,
+    cell: ({ row }) => <div className="lowercase text-center">{row.getValue("name")}</div>,
   },
   {
     accessorKey: "username",
@@ -76,7 +76,7 @@ const columns: ColumnDef<UserInfo>[] = [  {
         </Button>
       )
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("username")}</div>,
+    cell: ({ row }) => <div className="lowercase text-center">{row.getValue("username")}</div>,
   },
   {
     accessorKey: "role",
@@ -91,13 +91,21 @@ const columns: ColumnDef<UserInfo>[] = [  {
         </Button>
       )
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("role")}</div>,
+    cell: ({ row }) => <div className="lowercase text-center">{row.getValue("role")}</div>,
   },
   {
     accessorKey: "createdAt",
-    header: () => <div className="text-right">Created At</div>,
+    header: () => <div className="text-center">Created</div>,
     cell: ({ row }) => {
       const createdAt = new Date(row.getValue("createdAt")).toLocaleDateString();
+      return <div className="text-right font-medium">{createdAt}</div>
+    },
+  },
+  {
+    accessorKey: "updatedAt",
+    header: () => <div className="text-right">Last update</div>,
+    cell: ({ row }) => {
+      const createdAt = new Date(row.getValue("updatedAt")).toLocaleDateString();
       return <div className="text-right font-medium">{createdAt}</div>
     },
   },
@@ -118,6 +126,7 @@ const columns: ColumnDef<UserInfo>[] = [  {
   }, */
   {
     id: "actions",
+    header: "Actions",
     enableHiding: false,
     cell: ({ row }) => {
       const user = row.original

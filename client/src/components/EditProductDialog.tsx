@@ -17,29 +17,25 @@ import { editProduct } from "@/api/services/product-service";
 import { Pencil } from "lucide-react";
 
 interface ProductDialogProps {
-  product?: Product;
-  onProducttChange: () => void;
+  product: Product;
+  onProductChange: () => void;
   handleOpenEditDialog: (product?: Product) => void;
 }
 
 export function EditProductDialog({
   product,
-  onProducttChange,
+  onProductChange,
   handleOpenEditDialog,
 }: ProductDialogProps) {
-  const [name, setName] = useState(product?.name || "");
+  const [name, setName] = useState(product.name || "");
   const [price, setPrice] = useState(product?.price || 0);
   const [quantity, setQuantity] = useState(product?.quantity || 0);
 
   const handleSubmit = async () => {
     try {
       if (product) {
-        await editProduct(product.id ? product.id : "x", {
-          name,
-          price,
-          quantity,
-        });
-        onProducttChange();
+        await editProduct(product.id || "", { name, price, quantity });
+        onProductChange();
       }
     } catch (error) {
       console.error("Error submitting product:", error);
@@ -48,12 +44,12 @@ export function EditProductDialog({
 
   return (
     <Dialog>
-      <DialogTrigger asChild className="inline-flex items-center">
+      <DialogTrigger asChild>
         <span
           onClick={() => handleOpenEditDialog(product)}
-          style={{ cursor: "pointer" }}
+          className="inline-flex items-center cursor-pointer"
         >
-          <Pencil  size={16}/>
+          <Pencil size={16} />
         </span>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -71,6 +67,7 @@ export function EditProductDialog({
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="col-span-3"
+              placeholder={name}
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -83,6 +80,7 @@ export function EditProductDialog({
               value={price}
               onChange={(e) => setPrice(Number(e.target.value))}
               className="col-span-3"
+              placeholder={price.toString()}
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -95,11 +93,12 @@ export function EditProductDialog({
               value={quantity}
               onChange={(e) => setQuantity(Number(e.target.value))}
               className="col-span-3"
+              placeholder={quantity.toString()}
             />
           </div>
         </div>
         <DialogFooter>
-          <DialogClose>
+          <DialogClose asChild>
             <Button type="button" onClick={handleSubmit}>
               Edit product
             </Button>

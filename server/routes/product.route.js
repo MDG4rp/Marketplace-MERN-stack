@@ -20,7 +20,8 @@ router.post("/products", addProduct);
 
 // User adds a product to their own list
 router.post("/products/addProduct", userAddsProduct);
-router.post("/updateProduct/:id", updateProduct);
+
+router.put("/updateProduct/:id", updateProduct);
 
 // Admin deletes a specific product
 router.delete("/products/:id", deleteProduct);

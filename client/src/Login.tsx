@@ -47,7 +47,7 @@ export default function Login(): JSX.Element {
             "Authorization"
           ] = `Bearer ${jwt}`;
           console.log("SignIn successful, navigating...");
-          navigate(role === "admin" ? "/admin" : "/products");
+          navigate(role === "admin" ? "/totalProducts" : "/products");
         } else {
           console.log("Authentication failed");
         }

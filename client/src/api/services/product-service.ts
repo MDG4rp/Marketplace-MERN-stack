@@ -59,9 +59,10 @@ export function addProduct(newProduct: Product) {
       throw error;
     });
 }
-export function editProduct(productId: string, updatedProduct: Partial<Product>) {
-  return axiosInstance.put(`${api}/products/${productId}`, updatedProduct)
+export function editProduct(productId: string, updatedProduct: Product) {
+  return axiosInstance.put(`${api}/updateProduct/${productId}`, updatedProduct)
     .then(response => {
+      console.log("Product edited successfully:", response.data);
       return response.data;
     })
     .catch(error => {

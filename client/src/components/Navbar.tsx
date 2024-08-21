@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
         </div>
         <div className="flex space-x-4">
           <NavLink
-            to="/admin"
+            to="/totalProducts"
             className={({ isActive }) =>
               `px-4 py-2 rounded transition-colors duration-200 ${
                 isActive
@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
             Products
           </NavLink>
           <NavLink
-            to="/adminManagement"
+            to="/totalUsers"
             className={({ isActive }) =>
               `px-4 py-2 rounded transition-colors duration-200 ${
                 isActive
