@@ -13,7 +13,7 @@ import { ThemeProvider } from "@/api/context/ThemeContext";
 import ExternalLayout from "./components/ExternalLayout";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
-
+import { PrivateRoute } from "./routes/PrivateRoute";
 
 const store = createStore({
   authName: "_auth",
@@ -34,11 +34,24 @@ export default function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
             </Route>
-
             <Route path="/" element={<Layout />}>
               <Route element={<AuthOutlet fallbackPath="/" />}>
-                <Route path="/totalProducts" element={<AdminDashboard />} />
-                <Route path="/totalUsers" element={<AdminManagement />} />
+                <Route
+                  path="/totalUsers"
+                  element={
+                    <PrivateRoute requiredRole="admin">
+                      <AdminManagement />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/totalProducts"
+                  element={
+                    <PrivateRoute requiredRole="admin">
+                      <AdminDashboard />
+                    </PrivateRoute>
+                  }
+                />
                 <Route path="/products" element={<Products />} />
               </Route>
             </Route>
