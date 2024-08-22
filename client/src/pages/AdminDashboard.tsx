@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { getAllProducts, deleteProduct } from "./api/services/product-service";
-import Product from "./api/models/Product";
+import { getAllProducts, deleteProduct } from "@/api/services/product-service";
+import Product from "@/api/models/Product";
 import ProductTable from "@/components/ProductsTable"; // Ensure the import path is correct
 
 export default function AdminDashboard(): JSX.Element {
