@@ -8,23 +8,24 @@ const {
   deleteProduct,
   updateProduct,
 } = require("../controllers/products.controller");
+import isAdmin from "../middlewares/admin.middleware";
 
-// Get all products 
+// Get all products
 router.get("/products", getProducts);
 
 // Get all products for a specific user
 router.get("/:id/products", getUserProducts);
 
 // Admin creates a new product
-router.post("/products", addProduct);
+router.post("/products", isAdmin, addProduct);
 
 // User adds a product to their own list
 router.post("/products/addProduct", userAddsProduct);
 
 // Admin updates a product
-router.put("/updateProduct/:id", updateProduct);
+router.put("/updateProduct/:id", isAdmin, updateProduct);
 
 // Admin deletes a specific product from the market
-router.delete("/products/:id", deleteProduct);
+router.delete("/products/:id", isAdmin, deleteProduct);
 
 module.exports = router;

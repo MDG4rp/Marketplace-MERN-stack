@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const isAdmin = require("../middlewares/admin.middleware");
 const {
   register,
   login,
@@ -15,12 +16,12 @@ router.post("/register", register);
 router.post("/login", login);
 
 // Route to get all users
-router.get("/userslist", getAllUsers);
+router.get("/userslist",isAdmin, getAllUsers);
 
 // Route to delete a user
-router.delete("/deleteUser/:id", deleteUser); 
+router.delete("/deleteUser/:id",isAdmin, deleteUser); 
 
 // Route to update user role to admin or user
-router.put("/updateUserRole/:id", updateUserRole);
+router.put("/updateUserRole/:id",isAdmin, updateUserRole);
 
 module.exports = router;
