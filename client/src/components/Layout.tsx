@@ -1,18 +1,17 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
+import { GlobalFooter } from "./Footer";
 
-const Layout: React.FC = () => {
+export default function Layout() {
   return (
-    <div className="flex flex-col  h-screen transition-colors duration-300 bg-gray-100 dark:bg-gray-800">
+    <div
+      className="flex flex-col min-h-screen transition-colors duration-300 bg-gray-100 dark:bg-gray-800"
+    >
       <Navbar />
-      <div className="flex flex-1 flex-col">
-        <main className=" flex-grow transition-colors duration-300 bg-gray-100 dark:bg-gray-800">
-          <Outlet />
-        </main>
-      </div>
+      <main className="flex-grow transition-colors duration-300 bg-gray-100 dark:bg-gray-800">
+        <Outlet />
+      </main>
+      <GlobalFooter />
     </div>
   );
-};
-
-export default Layout;
+}

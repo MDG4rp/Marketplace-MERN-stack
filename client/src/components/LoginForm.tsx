@@ -41,33 +41,36 @@ export function LoginForm({ onSubmit }: ProfileFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="max-w-md mx-auto space-y-6 p-8 rounded-lg bg-white dark:bg-gray-900 shadow-md"
+        className="w-full max-w-md mx-auto p-8 bg-white dark:bg-gray-900 rounded-lg shadow-md dark:shadow-lg transition-shadow duration-300 ease-in-out"
       >
+        
+        
         <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+            <FormItem className="mb-6">
+              <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 Username
               </FormLabel>
               <FormControl>
                 <Input
                   placeholder="Enter your username"
                   {...field}
-                  className="mt-1 block w-full bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-2 focus:ring-teal-500 transition-all duration-300"
                 />
               </FormControl>
               <FormMessage className="text-red-500 text-xs mt-1" />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="password"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+            <FormItem className="mb-6">
+              <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 Password
               </FormLabel>
               <FormControl>
@@ -75,16 +78,18 @@ export function LoginForm({ onSubmit }: ProfileFormProps) {
                   type="password"
                   placeholder="Enter your password"
                   {...field}
-                  className="mt-1 block w-full bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-2 focus:ring-teal-500 transition-all duration-300"
                 />
               </FormControl>
               <FormMessage className="text-red-500 text-xs mt-1" />
             </FormItem>
           )}
         />
-        <Button
+
+<Button
+          variant="ghost"
           type="submit"
-          className="w-full py-2 px-4 bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-md hover:from-blue-600 hover:to-teal-600 transition-colors duration-300"
+          className="w-full py-3 px-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white rounded-md shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105"
         >
           Login
         </Button>

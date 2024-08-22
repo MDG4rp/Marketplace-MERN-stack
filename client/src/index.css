@@ -29,7 +29,6 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    
   }
 
   .dark {
@@ -60,10 +59,14 @@
     color: white;
   }
 }
-.bg-light {
-  background: linear-gradient(to right, #4facfe, #00f2fe);
+
+.variant2{
+  border-inline: 5px solid;
+  border-image: linear-gradient(to top,rgba(0,0,0,0),teal,rgb(37, 120, 244),rgba(0,0,0,0));
+  border-image-slice: 1;
 }
 
-.bg-dark {
-  background: linear-gradient(to right, #1f1c2c, #928dab);
-}
+
+
+
+

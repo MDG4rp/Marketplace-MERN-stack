@@ -9,6 +9,7 @@ import {
 import ProfileAvatar from "./Avatar";
 import useSignOut from "react-auth-kit/hooks/useSignOut";
 import { useNavigate } from "react-router-dom";
+import { ModeToggle } from "./DarkModeToggle";
 export default function DropdownMenuProfile() {
   const signOut = useSignOut();
   const navigate = useNavigate();
@@ -17,17 +18,27 @@ export default function DropdownMenuProfile() {
     navigate("/login");
   };
   return (
-    <DropdownMenu >
+    <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div className="cursor-pointer">
           <ProfileAvatar />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" >
-        <DropdownMenuLabel className="cursor-default">My Account</DropdownMenuLabel>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel className="cursor-default">
+          My Account
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer" onClick={handleLogout}>Logout</DropdownMenuItem>
+        <DropdownMenuItem className="cursor-pointer" onClick={handleLogout}>
+          Logout
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+
+        <DropdownMenuLabel className="cursor-default">Theme</DropdownMenuLabel>
+        <span className="flex justify-center">
+          <ModeToggle />
+        </span>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -56,7 +56,7 @@ export default function ProductTable({
         </TableHeader>
         <TableBody>
           {products.map((product) => (
-            <TableRow key={product.id}>
+            <TableRow key={product.id} className="hover:bg-gray-200">
               <TableCell className="font-medium">{product.id}</TableCell>
               <TableCell>{product.name}</TableCell>
               <TableCell className="text-center">{product.quantity}</TableCell>
