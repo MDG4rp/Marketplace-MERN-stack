@@ -119,9 +119,31 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
+// update user role to admin or user
+
+const updateUserRole = async (req, res, next) => {
+  const { id } = req.params;
+  const { role } = req.body;
+
+  try {
+    const user = await User.findByIdAndUpdate(id, { role }, { new: true });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      message: "User role updated successfully",
+      user: user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 module.exports = {
   register,
   login,
   getAllUsers,
   deleteUser,
+  updateUserRole,
 };

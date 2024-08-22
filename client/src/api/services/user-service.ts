@@ -19,3 +19,7 @@ export function getAllUsers(){
 export const deleteUser = (userId: string) => {
   return axiosInstance.delete(`${api}/deleteUser/${userId}`);
 };
+
+export const updateRole = (userId: string, role: string) => {
+  return axiosInstance.put(`${api}/updateUserRole/${userId}`, { role });
+};

@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -10,10 +10,10 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
+} from "@tanstack/react-table";
+import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -22,8 +22,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -31,17 +31,28 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { deleteUser } from "@/api/services/user-service"
-import UserInfo from "@/api/models/UserInfo"
+} from "@/components/ui/table";
+import { deleteUser } from "@/api/services/user-service";
+import { updateRole } from "@/api/services/user-service";
+import UserInfo from "@/api/models/UserInfo";
+import { IoIosRefresh } from "react-icons/io";
 
 const handleDeleteUser = (userId: string) => {
-  console.log(userId)
+  console.log(userId);
   deleteUser(userId).then((res) => {
-    console.log(res)
-  })}
+    console.log(res);
+  });
+};
 
-const columns: ColumnDef<UserInfo>[] = [  {
+const handleUpdateRole = (userId: string, role: string) => {
+  console.log(userId);
+  updateRole(userId, role).then((res) => {
+    console.log(res);
+  });
+};
+
+const columns: ColumnDef<UserInfo>[] = [
+  {
     accessorKey: "userID",
     header: "userID",
     cell: ({ row }) => (
@@ -59,9 +70,11 @@ const columns: ColumnDef<UserInfo>[] = [  {
           Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
-    cell: ({ row }) => <div className="lowercase text-center">{row.getValue("name")}</div>,
+    cell: ({ row }) => (
+      <div className="lowercase text-center">{row.getValue("name")}</div>
+    ),
   },
   {
     accessorKey: "username",
@@ -74,9 +87,11 @@ const columns: ColumnDef<UserInfo>[] = [  {
           Username
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
-    cell: ({ row }) => <div className="lowercase text-center">{row.getValue("username")}</div>,
+    cell: ({ row }) => (
+      <div className="lowercase text-center">{row.getValue("username")}</div>
+    ),
   },
   {
     accessorKey: "role",
@@ -89,24 +104,30 @@ const columns: ColumnDef<UserInfo>[] = [  {
           Role
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
-    cell: ({ row }) => <div className="lowercase text-center">{row.getValue("role")}</div>,
+    cell: ({ row }) => (
+      <div className="lowercase text-center">{row.getValue("role")}</div>
+    ),
   },
   {
     accessorKey: "createdAt",
     header: () => <div className="text-center">Created</div>,
     cell: ({ row }) => {
-      const createdAt = new Date(row.getValue("createdAt")).toLocaleDateString();
-      return <div className="text-right font-medium">{createdAt}</div>
+      const createdAt = new Date(
+        row.getValue("createdAt")
+      ).toLocaleDateString();
+      return <div className="text-right font-medium">{createdAt}</div>;
     },
   },
   {
     accessorKey: "updatedAt",
     header: () => <div className="text-right">Last update</div>,
     cell: ({ row }) => {
-      const createdAt = new Date(row.getValue("updatedAt")).toLocaleDateString();
-      return <div className="text-right font-medium">{createdAt}</div>
+      const createdAt = new Date(
+        row.getValue("updatedAt")
+      ).toLocaleDateString();
+      return <div className="text-right font-medium">{createdAt}</div>;
     },
   },
   /* {
@@ -129,7 +150,7 @@ const columns: ColumnDef<UserInfo>[] = [  {
     header: "Actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const user = row.original
+      const user = row.original;
 
       return (
         <DropdownMenu>
@@ -148,26 +169,39 @@ const columns: ColumnDef<UserInfo>[] = [  {
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>View User</DropdownMenuItem>
-            <DropdownMenuItem onClick={()=> handleDeleteUser(user.userID)}>Delete User</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() =>
+                handleUpdateRole(
+                  user.userID,
+                  user.role === "admin" ? "user" : "admin"
+                )
+              }
+            >
+              Update to {user.role === "admin" ? "user" : "admin"}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleDeleteUser(user.userID)}>
+              Delete User
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      )
+      );
     },
   },
-]
+];
 
 export function DataTableDemo({ data }: { data: UserInfo[] }) {
-  React.useEffect(() => {
+  React.useEffect(() => {}, [data]);
 
-  }, [data])
-    
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
-  )
+  );
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
+    React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
+  const handleRefresh = () => {
+    window.location.reload();
+  };
 
   const table = useReactTable({
     data,
@@ -191,11 +225,11 @@ export function DataTableDemo({ data }: { data: UserInfo[] }) {
       columnVisibility,
       rowSelection,
     },
-  })
+  });
 
   return (
     <div className="w-full">
-      <div className="flex items-center mb-6 ">
+      <div className="flex justify-between items-center mb-6">
         <Input
           placeholder="Search by name..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -204,18 +238,28 @@ export function DataTableDemo({ data }: { data: UserInfo[] }) {
           }
           className="max-w-sm"
         />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
+        <div className="flex items-center space-x-2">
+          <Button
+            onClick={handleRefresh}
+            className="dark:bg-black bg-white hover:bg-slate-200 dark:hover:bg-slate-800"
+          >
+            <IoIosRefresh
+              size="1rem"
+              className="text-black dark:text-white cursor-pointer "
+            />
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="flex items-center space-x-2">
+                <span>Columns</span>
+                <ChevronDown className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => (
                   <DropdownMenuCheckboxItem
                     key={column.id}
                     className="capitalize"
@@ -226,28 +270,26 @@ export function DataTableDemo({ data }: { data: UserInfo[] }) {
                   >
                     {column.id}
                   </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+                ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  )
-                })}
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
@@ -282,23 +324,23 @@ export function DataTableDemo({ data }: { data: UserInfo[] }) {
         </Table>
       </div>
       <div className="flex items-center justify-center space-x-2 mt-6">
-    <Button
-      variant="outline"
-      size="sm"
-      onClick={() => table.previousPage()}
-      disabled={!table.getCanPreviousPage()}
-    >
-      Previous
-    </Button>
-    <Button
-      variant="outline"
-      size="sm"
-      onClick={() => table.nextPage()}
-      disabled={!table.getCanNextPage()}
-    >
-      Next
-    </Button>
-  </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Next
+        </Button>
+      </div>
     </div>
-  )
+  );
 }

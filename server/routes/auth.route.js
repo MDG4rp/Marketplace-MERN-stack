@@ -5,6 +5,7 @@ const {
   login,
   getAllUsers,
   deleteUser,
+  updateUserRole,
 } = require("../controllers/auth.controller");
 
 // Route for user registration
@@ -18,5 +19,8 @@ router.get("/userslist", getAllUsers);
 
 // Route to delete a user
 router.delete("/deleteUser/:id", deleteUser); 
+
+// Route to update user role to admin or user
+router.put("/updateUserRole/:id", updateUserRole);
 
 module.exports = router;
