@@ -32,7 +32,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { deleteUser } from "@/api/services/user-service";
+import { deleteUser, getAllUsers } from "@/api/services/user-service";
 import { updateRole } from "@/api/services/user-service";
 import UserInfo from "@/api/models/UserInfo";
 import { IoIosRefresh } from "react-icons/io";
@@ -199,12 +199,15 @@ export function DataTableDemo({ data }: { data: UserInfo[] }) {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [tableData, setTableData] = React.useState<UserInfo[]>(data);
   const handleRefresh = () => {
-    window.location.reload();
+    getAllUsers().then((res) => {
+      setTableData(res);
+    });
   };
 
   const table = useReactTable({
-    data,
+    data: tableData,
     columns,
     initialState: {
       pagination: {
