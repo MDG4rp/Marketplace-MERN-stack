@@ -4,7 +4,7 @@ import { ModeToggle } from "./DarkModeToggle";
 
 export default function ExternalNavbar(): ReactElement {
   return (
-    <nav className="p-6 shadow-md bg-white dark:bg-gray-800">
+    <nav className="p-4 shadow-md bg-white dark:bg-gray-800">
       <div className="flex items-center justify-between">
         <NavLink
           to="/login"

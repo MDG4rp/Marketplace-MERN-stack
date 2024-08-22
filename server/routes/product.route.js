@@ -8,7 +8,7 @@ const {
   deleteProduct,
   updateProduct,
 } = require("../controllers/products.controller");
-import isAdmin from "../middlewares/admin.middleware";
+const isAdmin = require("../middlewares/admin.middleware");
 
 // Get all products
 router.get("/products", getProducts);
