@@ -1,7 +1,7 @@
 import { getAllUsers } from "./api/services/user-service";
 import UserInfo from "./api/models/UserInfo";
 import { useState, useEffect } from "react";
-import { DataTableDemo } from "./components/DataTableTest";
+import { DataTableDemo } from "./components/TotalUsersTable";
 
 export default function AdminManagement(): JSX.Element {
   const [users, setUsers] = useState<UserInfo[]>([]);
