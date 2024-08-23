@@ -43,8 +43,6 @@ export function LoginForm({ onSubmit }: ProfileFormProps) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="w-full max-w-md mx-auto p-8 bg-white dark:bg-gray-900 rounded-lg shadow-md dark:shadow-lg transition-shadow duration-300 ease-in-out"
       >
-        
-        
         <FormField
           control={form.control}
           name="username"
@@ -86,7 +84,7 @@ export function LoginForm({ onSubmit }: ProfileFormProps) {
           )}
         />
 
-<Button
+        <Button
           variant="ghost"
           type="submit"
           className="w-full py-3 px-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white rounded-md shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105"

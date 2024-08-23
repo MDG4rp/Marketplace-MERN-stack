@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
@@ -16,29 +15,13 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center justify-center text-black dark:text-white text-center">
       <div className="h-screen flex flex-col items-center justify-center p-8 bg-gray-200 dark:bg-gray-900 w-full">
-        <motion.h1
-          className="text-5xl font-bold mb-4"
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          Application
-        </motion.h1>
-        <motion.p
-          className="text-lg mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-        >
-          Test Description
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 1 }}
-        >
-          <Button onClick={handleScrollToSection}>Get Started</Button>
-        </motion.div>
+        <h1 className="font-bold mb-4">Application</h1>
+        <h2 className="mb-8">Test Description</h2>
+        <div>
+          <Button onClick={handleScrollToSection}>
+            <p>Get Started</p>
+          </Button>
+        </div>
       </div>
 
       <div
@@ -76,19 +59,22 @@ export default function HomePage() {
         <div className="flex flex-wrap gap-6 justify-center">
           <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg w-80">
             <p className="text-lg italic">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt, assumenda!
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt,
+              assumenda!
             </p>
             <p className="mt-4 font-semibold">User 1</p>
           </div>
           <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg w-80">
             <p className="text-lg italic">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam, tempore.
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam,
+              tempore.
             </p>
             <p className="mt-4 font-semibold">User 2</p>
           </div>
           <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg w-80">
             <p className="text-lg italic">
-             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima, similique.
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima,
+              similique.
             </p>
             <p className="mt-4 font-semibold">User 3</p>
           </div>
@@ -101,7 +87,9 @@ export default function HomePage() {
           <div className="bg-white dark:bg-gray-600 p-6 rounded-lg shadow-lg w-80">
             <h3 className="text-xl font-semibold mb-2">Feature 1</h3>
             <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam laboriosam odio molestias nostrum veritatis. Hic laudantium eum illum animi omnis.
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam
+              laboriosam odio molestias nostrum veritatis. Hic laudantium eum
+              illum animi omnis.
             </p>
           </div>
           <div className="bg-white dark:bg-gray-600 p-6 rounded-lg shadow-lg w-80">

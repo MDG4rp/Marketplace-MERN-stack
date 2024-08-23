@@ -43,11 +43,15 @@ export function AddProductDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="default" onClick={() => handleOpenAddDialog()} className="bg-gray-700 text-white dark:bg-gray-400 dark:text-gray-900">
+        <Button
+          variant="default"
+          onClick={() => handleOpenAddDialog()}
+          className="bg-gray-700 text-white dark:bg-gray-400 dark:text-gray-900"
+        >
           Add Product
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]"> 
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Add a new product to the database.</DialogTitle>
           <DialogDescription>
@@ -104,7 +108,10 @@ export function AddProductDialog({
           </div>
         </div>
         <DialogFooter>
-          <DialogClose onClick={handleSubmit} className="bg-gray-700 text-white dark:bg-white dark:hover:bg-gray-200 dark:text-gray-900 px-4 py-2 rounded-md">
+          <DialogClose
+            onClick={handleSubmit}
+            className="bg-gray-700 text-white dark:bg-white dark:hover:bg-gray-200 dark:text-gray-900 px-4 py-2 rounded-md"
+          >
             Add Product
           </DialogClose>
         </DialogFooter>

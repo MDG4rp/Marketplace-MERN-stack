@@ -47,7 +47,7 @@ export default function Products(): JSX.Element {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {userProducts.length > 0 ? (
-            userProducts.map((product,index) => (
+            userProducts.map((product, index) => (
               <ProductCard
                 key={index}
                 product={product}

@@ -50,7 +50,6 @@ export default function Navbar() {
               >
                 Products
               </NavLink>
-              
             </>
           )}
           {auth?.role === "user" && (
@@ -91,9 +90,7 @@ export default function Navbar() {
               <DropdownMenuProfile />
             </>
           ) : (
-            <span className="text-gray-900 dark:text-gray-200">
-              Loading...
-            </span>
+            <span className="text-gray-900 dark:text-gray-200">Loading...</span>
           )}
         </div>
       </div>

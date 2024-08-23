@@ -60,13 +60,14 @@
   }
 }
 
-.variant2{
+.variant2 {
   border-inline: 5px solid;
-  border-image: linear-gradient(to top,rgba(0,0,0,0),teal,rgb(37, 120, 244),rgba(0,0,0,0));
+  border-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0),
+    teal,
+    rgb(37, 120, 244),
+    rgba(0, 0, 0, 0)
+  );
   border-image-slice: 1;
 }
-
-
-
-
-

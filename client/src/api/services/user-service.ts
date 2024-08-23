@@ -1,9 +1,9 @@
 import { axiosInstance } from "@/lib/axios";
-import  mapGetAllUsersRequest  from "../mappers/users-mapper";
+import mapGetAllUsersRequest from "../mappers/users-mapper";
 
 const api = import.meta.env.VITE_API_URL;
 
-export function getAllUsers(){
+export function getAllUsers() {
   return axiosInstance
     .get(`${api}/userslist`)
     .then((response) => {

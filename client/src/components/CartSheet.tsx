@@ -28,7 +28,7 @@ export function CartSheet({ product, onPurchaseSuccess }: CartSheetProps) {
   const userID = auth?.id;
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false); // State for loading
+  const [loading, setLoading] = useState(false);
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
@@ -62,7 +62,6 @@ export function CartSheet({ product, onPurchaseSuccess }: CartSheetProps) {
         console.log("Product bought successfully:", data);
         setLoading(false);
         onPurchaseSuccess();
-        document.dispatchEvent(new Event("closeSheet"));
       })
       .catch((error) => {
         console.error("Error buying product:", error);

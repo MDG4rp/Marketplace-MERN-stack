@@ -20,8 +20,6 @@ export default function Products(): JSX.Element {
     fetchProducts();
   }, []);
 
-
-
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6">
@@ -30,7 +28,12 @@ export default function Products(): JSX.Element {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {allProducts.length > 0 ? (
           allProducts.map((product) => (
-            <ProductCard key={product.id} product={product}  onPurchaseSuccess={fetchProducts} type="buy"/>
+            <ProductCard
+              key={product.id}
+              product={product}
+              onPurchaseSuccess={fetchProducts}
+              type="buy"
+            />
           ))
         ) : (
           <p className="text-gray-600 dark:text-gray-400">

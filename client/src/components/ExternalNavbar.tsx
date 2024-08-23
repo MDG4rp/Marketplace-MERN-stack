@@ -19,7 +19,10 @@ export default function ExternalNavbar(): ReactElement {
           Login
         </NavLink>
 
-        <Link to={'/'} className="text-3xl font-bold text-gray-900 dark:text-white">
+        <Link
+          to={"/"}
+          className="text-3xl font-bold text-gray-900 dark:text-white"
+        >
           MyApp
         </Link>
         <ModeToggle />
