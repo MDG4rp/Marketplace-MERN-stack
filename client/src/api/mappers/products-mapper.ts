@@ -6,6 +6,7 @@ export function mapProduct(product: any) {
     id: product._id,
     name: product.name,
     price: product.price,
+    image: product.image,
     quantity: product.quantity,
     updatedAt: product.updatedAt,
     createdAt: product.createdAt,

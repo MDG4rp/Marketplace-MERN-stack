@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AuthProvider from "react-auth-kit";
 import createStore from "react-auth-kit/createStore";
 import AuthOutlet from "@auth-kit/react-router/AuthOutlet";
-import Products from "./Products";
+import Products from "./pages/Products";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminManagement from "./pages/AdminManagement";
 import refresh from "@/lib/refresh";
@@ -14,6 +14,7 @@ import ExternalLayout from "./components/ExternalLayout";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import { PrivateRoute } from "./routes/PrivateRoute";
+import UserProducts from "./pages/UserProducts";
 
 const store = createStore({
   authName: "_auth",
@@ -52,7 +53,22 @@ export default function App() {
                     </PrivateRoute>
                   }
                 />
-                <Route path="/products" element={<Products />} />
+                <Route
+                  path="/products"
+                  element={
+                    <PrivateRoute requiredRole="user">
+                      <Products />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/userProducts"
+                  element={
+                    <PrivateRoute requiredRole="user">
+                      <UserProducts />
+                    </PrivateRoute>
+                  }
+                />
               </Route>
             </Route>
           </Routes>

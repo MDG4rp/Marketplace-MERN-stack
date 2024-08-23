@@ -29,10 +29,11 @@ export function AddProductDialog({
   const [name, setName] = useState(product?.name || "");
   const [price, setPrice] = useState(product?.price || 0);
   const [quantity, setQuantity] = useState(product?.quantity || 0);
+  const [image, setImage] = useState(product?.image || "");
 
   const handleSubmit = async () => {
     try {
-      await addProduct({ name, price, quantity });
+      await addProduct({ name, price, quantity, image });
       onProducttChange();
     } catch (error) {
       console.error("Error submitting product:", error);
@@ -86,6 +87,18 @@ export function AddProductDialog({
               type="number"
               value={quantity}
               onChange={(e) => setQuantity(Number(e.target.value))}
+              className="col-span-3"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="image" className="text-right">
+              Image url
+            </Label>
+            <Input
+              id="image"
+              type="text"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
               className="col-span-3"
             />
           </div>

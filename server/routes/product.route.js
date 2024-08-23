@@ -20,7 +20,7 @@ router.get("/:id/products", getUserProducts);
 router.post("/products", isAdmin, addProduct);
 
 // User adds a product to their own list
-router.post("/products/addProduct", userAddsProduct);
+router.post("/:id/addProduct", userAddsProduct);
 
 // Admin updates a product
 router.put("/updateProduct/:id", isAdmin, updateProduct);

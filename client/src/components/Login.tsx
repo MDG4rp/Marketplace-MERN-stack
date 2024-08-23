@@ -45,7 +45,7 @@ export default function Login() {
           "Authorization"
         ] = `Bearer ${jwt}`;
         console.log("SignIn successful, navigating...");
-        navigate(role === "admin" ? "/totalProducts" : "/products");
+        navigate(role === "admin" ? "/totalUsers" : "/products");
       } else {
         console.log("Authentication failed");
       }

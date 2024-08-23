@@ -1,6 +1,6 @@
 const { Product } = require("../models/product.model");
 const User = require("../models/user.model");
-require('dotenv').config();
+require("dotenv").config();
 
 const api = process.env.API_URL;
 
@@ -19,10 +19,10 @@ const getProducts = async (req, res) => {
 const getUserProducts = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findById(id).populate('products');
+    const user = await User.findById(id).populate("products");
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
     res.status(200).json(user.products);
   } catch (error) {
@@ -46,22 +46,20 @@ const getProduct = async (req, res) => {
 
 const addProduct = async (req, res) => {
   try {
-   
     let product = await Product.findOne({ name: req.body.name });
 
     const quantityToAdd = Number(req.body.quantity);
 
     if (product) {
-     
       product.quantity += quantityToAdd;
       await product.save();
       res.status(200).json(product);
     } else {
-     
       product = new Product({
         name: req.body.name,
         quantity: quantityToAdd,
         price: req.body.price,
+        image: req.body.image,
       });
       await product.save();
       res.status(201).json(product);
@@ -73,32 +71,32 @@ const addProduct = async (req, res) => {
 
 const userAddsProduct = async (req, res) => {
   try {
-    const { id } = req.params; // ID dell'utente
-    const { name, quantity, price } = req.body; // Dati del prodotto
+    const { id } = req.params;
+    const { name, quantity, price, image } = req.body;
 
-    // Trova l'utente nel database
+  
     const user = await User.findById(id);
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
-
-    // Trova il prodotto nel negozio (DB)
-    const storeProduct = await Store.findOne({ name });
+    const storeProduct = await Product.findOne({ name });
     if (!storeProduct) {
-      return res.status(404).json({ message: 'Product not found in store' });
+      return res.status(404).json({ message: "Product not found in store" });
     }
 
-    // Verifica se la quantità richiesta è disponibile
     if (storeProduct.quantity < quantity) {
-      return res.status(400).json({ message: 'Not enough quantity available in store' });
+      return res
+        .status(400)
+        .json({ message: "Not enough quantity available in store" });
     }
 
-    // Rimuovi la quantità dal negozio
     storeProduct.quantity -= quantity;
     await storeProduct.save();
 
-    // Aggiungi il prodotto all'utente
-    const existingProduct = user.products.find((product) => product.name === name);
+    const existingProduct = user.products.find(
+      (product) => product.name === name
+    );
+
     if (existingProduct) {
       existingProduct.quantity += Number(quantity);
     } else {
@@ -106,16 +104,14 @@ const userAddsProduct = async (req, res) => {
         name,
         quantity: Number(quantity),
         price,
+        image,
       });
     }
 
-    // Salva le modifiche all'utente
     await user.save();
 
-    // Risposta di successo
-    res.status(201).json({ message: 'Product added successfully', product: req.body });
+    res.status(201).json({ message: "Product added successfully", product: req.body });
   } catch (error) {
-    // Gestione degli errori
     res.status(500).json({ message: error.message });
   }
 };
@@ -123,7 +119,9 @@ const userAddsProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const product = await Product.findByIdAndUpdate(id, req.body, { new: true });
+    const product = await Product.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
@@ -135,7 +133,7 @@ const updateProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const product = await Product.findByIdAndDelete(id);
 
     if (!product) {
