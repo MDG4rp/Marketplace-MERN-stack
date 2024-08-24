@@ -72,28 +72,32 @@ export function CartSheet({ product, onPurchaseSuccess }: CartSheetProps) {
 
   const totalPrice = selectedQuantity * product.price;
 
-  const formattedPrice = product.price.toLocaleString("it-IT", {
-    style: "currency",
-    currency: "EUR",
-  });
-  const formattedTotalPrice = totalPrice.toLocaleString("it-IT", {
-    style: "currency",
-    currency: "EUR",
-  });
+  const formatPrice = (price: number) => {
+    return price % 1 === 0
+      ? price.toLocaleString("it-IT", {
+          style: "currency",
+          currency: "EUR",
+          minimumFractionDigits: 0,
+        })
+      : price.toLocaleString("it-IT", { style: "currency", currency: "EUR" });
+  };
+
+  const formattedPrice = formatPrice(product.price);
+  const formattedTotalPrice = formatPrice(totalPrice);
 
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <div className="cursor-pointer p-2 rounded-full transition-colors duration-300 flex items-center group hover:bg-gray-200 dark:hover:bg-gray-700">
-          <BsCartPlus className="text-2xl text-gray-600 dark:text-gray-400 dark:group-hover:text-white" />
+        <div className="cursor-pointer p-2 rounded-full flex items-center group hover:bg-green-700 dark:hover:bg-green-700 group-hover:text-white">
+          <BsCartPlus className="text-2xl text-gray-600 dark:text-gray-400 group-hover:text-gray-200" />
         </div>
       </SheetTrigger>
-      <SheetContent className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-2xl shadow-lg dark:shadow-none">
+      <SheetContent className="bg-white dark:bg-emerald-950 text-gray-900 dark:text-gray-100 rounded-2xl rounded-r-none shadow-lg dark:shadow-none">
         <SheetHeader>
           <SheetTitle className="text-2xl font-semibold">
             Buy Product
           </SheetTitle>
-          <SheetDescription className="text-sm mt-1">
+          <SheetDescription className="text-sm mt-1 ">
             Review the product details and select the quantity.
           </SheetDescription>
         </SheetHeader>
@@ -111,7 +115,7 @@ export function CartSheet({ product, onPurchaseSuccess }: CartSheetProps) {
                 htmlFor="productName"
                 className="text-right w-1/3 dark:text-gray-300"
               >
-                Product Name:
+                Product:
               </Label>
               <p
                 id="productName"
@@ -148,7 +152,7 @@ export function CartSheet({ product, onPurchaseSuccess }: CartSheetProps) {
                 max={product.quantity}
                 value={selectedQuantity}
                 onChange={handleQuantityChange}
-                className="w-2/3 p-2 border rounded-lg border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+                className="w-2/3 p-2 border rounded-lg border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-transparent text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-green-700 dark:focus:ring-green-700"
               />
             </div>
             {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
@@ -172,11 +176,11 @@ export function CartSheet({ product, onPurchaseSuccess }: CartSheetProps) {
           <SheetClose>
             <Button
               type="submit"
-              className="w-full bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800 text-white rounded-lg shadow-md relative"
+              className="bg-green-700 hover:bg-green-900 dark:bg-green-700 dark:text-white dark:hover:text-black text-white rounded-lg shadow-md "
               onClick={handleBuyProduct}
               disabled={loading}
             >
-              `Buy for ${formattedTotalPrice}`
+              Buy
             </Button>
           </SheetClose>
         </SheetFooter>

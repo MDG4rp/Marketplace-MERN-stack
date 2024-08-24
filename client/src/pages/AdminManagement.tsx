@@ -20,7 +20,7 @@ export default function AdminManagement(): JSX.Element {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen transition-colors duration-300 bg-gray-100 dark:bg-gray-900">
+      <div className="flex items-center justify-center">
         <div className="text-2xl font-semibold text-gray-800 dark:text-white">
           Loading...
         </div>
@@ -29,8 +29,8 @@ export default function AdminManagement(): JSX.Element {
   }
 
   return (
-    <div className="p-7 mx-8 rounded-lg bg-gray-200 dark:bg-gray-900 h-full">
-      <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg flex flex-col items-center">
+    <div className="p-7 mx-8 rounded-lg h-screen">
+      <div className="p-6 rounded-lg flex flex-col items-center">
         <DataTableDemo data={users} />
       </div>
     </div>

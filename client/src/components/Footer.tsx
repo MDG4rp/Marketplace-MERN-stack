@@ -4,108 +4,103 @@ import {
   FaInstagram,
   FaLinkedinIn,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export function GlobalFooter() {
   return (
-    <footer className="bg-gray-800 text-gray-100">
-      <div className="container mx-auto p-8">
+    <>
+      <div className="container mx-auto p-6 dark:text-gray-300">
         <div className="flex flex-wrap justify-between text-sm">
           <div className="w-full md:w-1/4 mb-4 md:mb-0">
-            <h1 className="text-2xl font-semibold text-white mb-2">MyApp</h1>
-            <p className="text-gray-400">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Inventore, sed.
-            </p>
+            <h1 className="text-xl font-semibold mb-2">MyApp</h1>
+            <p>My First FullStack Project!</p>
           </div>
           <div className="w-full md:w-1/4 mb-4 md:mb-0">
-            <h2 className="text-lg font-semibold text-white mb-2">
-              Quick Links
-            </h2>
+            <h2 className="text-lg font-semibold mb-2">Quick Links</h2>
             <ul>
               <li className="mb-1">
-                <a href="/" className="text-gray-400 hover:text-white">
+                <Link to="/" className="dark:hover:text-white">
                   Home
-                </a>
+                </Link>
               </li>
               <li className="mb-1">
-                <a href="/about" className="text-gray-400 hover:text-white">
+                <Link to="/about" className="dark:hover:text-white">
                   About Us
-                </a>
+                </Link>
               </li>
               <li className="mb-1">
-                <a href="/services" className="text-gray-400 hover:text-white">
+                <Link to="/services" className="dark:hover:text-white">
                   Services
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/contact" className="text-gray-400 hover:text-white">
+                <Link to="/contact" className="dark:hover:text-white">
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
           <div className="w-full md:w-1/4 mb-4 md:mb-0">
-            <h2 className="text-lg font-semibold text-white mb-2">
-              Contact Us
-            </h2>
+            <h2 className="text-lg font-semibold mb-2">Contact Us</h2>
             <ul>
               <li className="mb-1">
-                <a
-                  href="mailto:info@myapp.com"
-                  className="text-gray-400 hover:text-white"
+                <Link
+                  to="mailto:info@myapp.com"
+                  className="dark:hover:text-white"
                 >
                   info@myapp.com
-                </a>
+                </Link>
               </li>
               <li className="mb-1">
-                <a
-                  href="tel:+1234567890"
-                  className="text-gray-400 hover:text-white"
-                >
+                <Link to="tel:+1234567890" className="dark:hover:text-white">
                   +123 456 7890
-                </a>
+                </Link>
               </li>
               <li className="mb-1">
-                <p className="text-gray-400">123 Street Name, City, Country</p>
+                <p>123 Street Name, City, Country</p>
               </li>
             </ul>
           </div>
           <div className="w-full md:w-1/4">
-            <h2 className="text-lg font-semibold text-white mb-2">Follow Us</h2>
-            <div className="flex space-x-3">
+            <h2 className="text-lg font-semibold mb-2 text-left">Follow Us</h2>
+            <div className="flex space-x-3 justify-start text-left">
               <a
                 href="https://facebook.com"
-                className="text-gray-400 hover:text-white"
+                aria-label="Facebook"
+                className="text-xl dark:hover:text-white"
               >
-                <FaFacebookF className="text-xl" />
+                <FaFacebookF />
               </a>
               <a
                 href="https://twitter.com"
-                className="text-gray-400 hover:text-white"
+                aria-label="Twitter"
+                className="text-xl dark:hover:text-white"
               >
-                <FaTwitter className="text-xl" />
+                <FaTwitter />
               </a>
               <a
                 href="https://instagram.com"
-                className="text-gray-400 hover:text-white"
+                aria-label="Instagram"
+                className="text-xl dark:hover:text-white"
               >
-                <FaInstagram className="text-xl" />
+                <FaInstagram />
               </a>
               <a
                 href="https://linkedin.com"
-                className="text-gray-400 hover:text-white"
+                aria-label="LinkedIn"
+                className="text-xl dark:hover:text-white"
               >
-                <FaLinkedinIn className="text-xl" />
+                <FaLinkedinIn />
               </a>
             </div>
           </div>
         </div>
       </div>
-      <div className="bg-gray-700 p-4">
-        <div className="container mx-auto text-center text-gray-300 text-xs">
+      <div className="p-4">
+        <div className="container mx-auto text-center text-xs">
           <p>&copy; {new Date().getFullYear()} MyApp. All rights reserved.</p>
         </div>
       </div>
-    </footer>
+    </>
   );
 }

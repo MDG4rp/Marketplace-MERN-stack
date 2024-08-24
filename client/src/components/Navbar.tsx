@@ -12,7 +12,7 @@ export default function Navbar() {
   const auth = useAuthUser<AuthUser>();
 
   return (
-    <nav className="p-6 bg-white dark:bg-gray-800">
+    <nav className="p-6 ">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <div className="text-xl font-bold text-gray-900 dark:text-white mr-4">
@@ -27,7 +27,7 @@ export default function Navbar() {
                 className={({ isActive }) =>
                   `px-4 py-2 rounded text-xl ${
                     isActive
-                      ? "bg-gray-700 text-white dark:bg-gray-400 dark:text-gray-900"
+                      ? "bg-green-700 text-white dark:bg-green-700 dark:text-white"
                       : "text-gray-900 dark:text-gray-200 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-100"
                   }`
                 }
@@ -43,7 +43,7 @@ export default function Navbar() {
                 className={({ isActive }) =>
                   `px-4 py-2 rounded text-xl ${
                     isActive
-                      ? "bg-gray-700 text-white dark:bg-gray-400 dark:text-gray-900"
+                      ? "bg-green-700 text-white dark:bg-green-700 dark:text-white"
                       : "text-gray-900 dark:text-gray-200 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-100"
                   }`
                 }
@@ -58,7 +58,7 @@ export default function Navbar() {
               className={({ isActive }) =>
                 `px-4 py-2 rounded text-xl ${
                   isActive
-                    ? "bg-gray-700 text-white dark:bg-gray-400 dark:text-gray-900"
+                    ? "bg-green-700 text-white dark:bg-green-700 dark:text-white"
                     : "text-gray-900 dark:text-gray-200 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-100"
                 }`
               }
@@ -72,7 +72,7 @@ export default function Navbar() {
               className={({ isActive }) =>
                 `px-4 py-2 rounded text-xl ${
                   isActive
-                    ? "bg-gray-700 text-white dark:bg-gray-400 dark:text-gray-900"
+                    ? "bg-green-700 text-white dark:bg-green-700 dark:text-white"
                     : "text-gray-900 dark:text-gray-200 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-100"
                 }`
               }

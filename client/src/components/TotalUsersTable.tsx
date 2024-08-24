@@ -11,7 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -36,6 +36,7 @@ import { deleteUser, getAllUsers } from "@/api/services/user-service";
 import { updateRole } from "@/api/services/user-service";
 import UserInfo from "@/api/models/UserInfo";
 import { IoIosRefresh } from "react-icons/io";
+import { IoIosOptions } from "react-icons/io";
 
 const handleDeleteUser = (userId: string) => {
   console.log(userId);
@@ -66,9 +67,10 @@ const columns: ColumnDef<UserInfo>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className=" dark:hover:bg-emerald-900"
         >
           Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 h-4 w-4 " />
         </Button>
       );
     },
@@ -83,6 +85,7 @@ const columns: ColumnDef<UserInfo>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className=" dark:hover:bg-emerald-900"
         >
           Username
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -100,6 +103,7 @@ const columns: ColumnDef<UserInfo>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className=" dark:hover:bg-emerald-900 hover:bg-green-200"
         >
           Role
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -155,20 +159,21 @@ const columns: ColumnDef<UserInfo>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
+            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-green-100">
               <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
+              < IoIosOptions className="h-6 w-6" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="end" className="dark:bg-emerald-950">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(user.userID)}
+              className="cursor-pointer"
             >
               Copy User ID
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View User</DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer">View User</DropdownMenuItem>
             <DropdownMenuItem
               onClick={() =>
                 handleUpdateRole(
@@ -176,10 +181,11 @@ const columns: ColumnDef<UserInfo>[] = [
                   user.role === "admin" ? "user" : "admin"
                 )
               }
+              className="cursor-pointer"
             >
               Update to {user.role === "admin" ? "user" : "admin"}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleDeleteUser(user.userID)}>
+            <DropdownMenuItem onClick={() => handleDeleteUser(user.userID)} className="cursor-pointer">
               Delete User
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -231,7 +237,7 @@ export function DataTableDemo({ data }: { data: UserInfo[] }) {
   });
 
   return (
-    <div className="w-full">
+    <div className="w-full  bg-white dark:bg-transparent rounded-lg shadow-2xl dark:shadow-2xl p-4">
       <div className="flex justify-between items-center mb-6">
         <Input
           placeholder="Search by name..."
@@ -239,33 +245,33 @@ export function DataTableDemo({ data }: { data: UserInfo[] }) {
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="dark:bg-transparent dark:text-white max-w-sm borderborder border-green-500 dark:border-neutral-700 hover:border-green-600 dark:hover:border-green-700 focus-within:ring-2 focus-within:ring-green-500 text-black"
         />
         <div className="flex items-center space-x-2">
           <Button
             onClick={handleRefresh}
-            className="dark:bg-black bg-white hover:bg-slate-200 dark:hover:bg-slate-800"
+            className="dark:bg-green-700 bg-green-700 hover:bg-green-900 dark:hover:bg-green-900"
           >
             <IoIosRefresh
               size="1rem"
-              className="text-black dark:text-white cursor-pointer "
+              className="text-white dark:text-white cursor-pointer "
             />
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="flex items-center space-x-2">
+              <Button variant="default" className="flex items-center space-x-2 bg-green-700 dark:text-white dark:bg-green-700 hover:bg-green-900 dark:hover:bg-green-900 ">
                 <span>Columns</span>
                 <ChevronDown className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="dark:bg-emerald-950">
               {table
                 .getAllColumns()
                 .filter((column) => column.getCanHide())
                 .map((column) => (
                   <DropdownMenuCheckboxItem
                     key={column.id}
-                    className="capitalize"
+                    className="capitalize cursor-pointer hover:bg-green-100"
                     checked={column.getIsVisible()}
                     onCheckedChange={(value) =>
                       column.toggleVisibility(!!value)
@@ -317,7 +323,7 @@ export function DataTableDemo({ data }: { data: UserInfo[] }) {
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-24 text-left"
                 >
                   No results.
                 </TableCell>
@@ -332,6 +338,7 @@ export function DataTableDemo({ data }: { data: UserInfo[] }) {
           size="sm"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
+          className="dark:bg-green-700 hover:bg-black text-white bg-green-700 dark:hover:bg-green-700"
         >
           Previous
         </Button>
@@ -340,6 +347,7 @@ export function DataTableDemo({ data }: { data: UserInfo[] }) {
           size="sm"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
+          className="dark:bg-green-700 hover:bg-black bg-green-700 text-white dark:hover:bg-green-700"
         >
           Next
         </Button>

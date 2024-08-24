@@ -4,9 +4,11 @@ import { GlobalFooter } from "./Footer";
 
 export default function Layout() {
   return (
-    <div className="flex flex-col min-h-screen transition-colors duration-300 bg-gray-100 dark:bg-gray-800">
-      <Navbar />
-      <main className="flex-grow transition-colors duration-300 bg-gray-100 dark:bg-gray-900">
+    <div className="text-zinc-600 dark:text-gray-200 flex flex-col h-screen">
+      <span className="sticky top-0 z-50 bg-navbarLight dark:bg-navbarDark">
+        <Navbar/>
+      </span>
+      <main className="flex-grow z-0">
         <Outlet />
       </main>
       <GlobalFooter />

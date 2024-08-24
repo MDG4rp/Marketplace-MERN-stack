@@ -82,3 +82,13 @@ export function editProduct(productId: string, updatedProduct: Product) {
       throw error;
     });
 }
+
+export function getSearchedProducts({ search }: { search: string }) {
+  return axiosInstance
+    .get("/products", {
+      params: {
+        search,
+      },
+    })
+    .then((data) => mapProducts(data.data));
+}

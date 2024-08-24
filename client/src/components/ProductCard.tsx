@@ -24,7 +24,7 @@ export default function ProductCard({
   });
 
   return (
-    <Card className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-md rounded-lg transition-transform transform hover:scale-105 hover:shadow-lg">
+    <Card className="bg-white dark:bg-transparent dark:border-green-700 text-gray-900 dark:text-gray-100 shadow-2xl rounded-lg">
       <CardHeader>
         <img
           src={product.image}

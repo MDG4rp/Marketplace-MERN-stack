@@ -46,7 +46,7 @@ export function AddProductDialog({
         <Button
           variant="default"
           onClick={() => handleOpenAddDialog()}
-          className="bg-gray-700 text-white dark:bg-gray-400 dark:text-gray-900"
+          className="bg-green-700 text-white dark:bg-green-700 dark:text-white dark:hover:bg-green-900 hover:bg-green-900 dark:hover:text-white"
         >
           Add Product
         </Button>
@@ -67,7 +67,7 @@ export function AddProductDialog({
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="col-span-3"
+              className="col-span-3 dark:text-black focus:ring-green-700"
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -79,7 +79,7 @@ export function AddProductDialog({
               type="number"
               value={price}
               onChange={(e) => setPrice(Number(e.target.value))}
-              className="col-span-3"
+              className="col-span-3 dark:text-black focus:ring-green-700"
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -91,7 +91,7 @@ export function AddProductDialog({
               type="number"
               value={quantity}
               onChange={(e) => setQuantity(Number(e.target.value))}
-              className="col-span-3"
+              className="col-span-3 dark:text-black focus:ring-green-700"
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -103,14 +103,14 @@ export function AddProductDialog({
               type="text"
               value={image}
               onChange={(e) => setImage(e.target.value)}
-              className="col-span-3"
+              className="col-span-3 dark:text-black focus:ring-green-700"
             />
           </div>
         </div>
         <DialogFooter>
           <DialogClose
             onClick={handleSubmit}
-            className="bg-gray-700 text-white dark:bg-white dark:hover:bg-gray-200 dark:text-gray-900 px-4 py-2 rounded-md"
+            className="bg-green-700 text-white dark:bg-green-700 hover:bg-green-900 dark:hover:bg-green-900 dark:text-white px-4 py-2 rounded-md"
           >
             Add Product
           </DialogClose>

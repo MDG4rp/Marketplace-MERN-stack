@@ -1,16 +1,19 @@
-import { Outlet } from "react-router-dom";
 import ExternalNavbar from "./ExternalNavbar";
 import { GlobalFooter } from "./Footer";
-export default function ExternalLayout() {
+import { Outlet } from "react-router-dom";
+
+const App = () => {
   return (
-    <div className="flex flex-col h-screen transition-colors duration-300">
-      <span className=" dark:bg-zinc-800 sticky z-100 top-0">
-        <ExternalNavbar />
+    <div className="text-zinc-600 dark:text-gray-200 flex flex-col h-screen">
+      <span className="sticky p-2 top-0 z-50 bg-navbarLight dark:bg-navbarDark">
+        <ExternalNavbar/>
       </span>
-      <main className="flex-grow transition-colors duration-300 bg-gray-200 dark:bg-gray-900">
+      <main className="flex-grow">
         <Outlet />
       </main>
       <GlobalFooter />
     </div>
   );
-}
+};
+
+export default App;

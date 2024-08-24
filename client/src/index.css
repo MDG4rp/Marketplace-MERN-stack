@@ -4,7 +4,8 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    background: linear-gradient(to bottom, #fffeff, #c4fdd4);
+    background-attachment: fixed;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
@@ -32,7 +33,8 @@
   }
 
   .dark {
-    --background: 240 10% 3.9%;
+    background: linear-gradient(to bottom, #1f2320, #022c22);
+    background-attachment: fixed;
     --foreground: 0 0% 98%;
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
@@ -60,14 +62,18 @@
   }
 }
 
-.variant2 {
-  border-inline: 5px solid;
-  border-image: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0),
-    teal,
-    rgb(37, 120, 244),
-    rgba(0, 0, 0, 0)
-  );
-  border-image-slice: 1;
+.navbarLight {
+  background: #fffeff;
+}
+
+.navbarDark {
+  background: #022c22;
+}
+
+.sheetLight{
+  background: linear-gradient(to bottom, #fffeff, #c4fdd4);
+}
+
+.DropDarkCustom{
+  background-color: #042d21;
 }

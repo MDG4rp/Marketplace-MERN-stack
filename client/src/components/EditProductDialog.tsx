@@ -66,7 +66,7 @@ export function EditProductDialog({
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="col-span-3"
+              className="col-span-3 dark:text-black focus:ring-green-700"
               placeholder={name}
             />
           </div>
@@ -79,7 +79,7 @@ export function EditProductDialog({
               type="number"
               value={price}
               onChange={(e) => setPrice(Number(e.target.value))}
-              className="col-span-3"
+              className="col-span-3 dark:text-black focus:ring-green-700"
               placeholder={price.toString()}
             />
           </div>
@@ -92,14 +92,14 @@ export function EditProductDialog({
               type="number"
               value={quantity}
               onChange={(e) => setQuantity(Number(e.target.value))}
-              className="col-span-3"
+              className="col-span-3 dark:text-black focus:ring-green-700"
               placeholder={quantity.toString()}
             />
           </div>
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="button" onClick={handleSubmit}>
+            <Button type="button" onClick={handleSubmit} className="bg-green-700 hover:bg-green-900 text-white dark:bg-green-700 dark:text-white dark:hover:bg-green-900 dark:hover:text-white">
               Edit product
             </Button>
           </DialogClose>

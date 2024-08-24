@@ -5,8 +5,12 @@ require("dotenv").config();
 const api = process.env.API_URL;
 
 const getProducts = async (req, res) => {
+
   try {
-    const products = await Product.find({});
+    // ricerca
+    const { search } = req.query;
+    const query = search ? { name: { $regex: search, $options: "i" } } : {};
+    const products = await Product.find(query);
     res.status(200).json({
       products: products,
       message: "Products fetched successfully",
@@ -74,7 +78,6 @@ const userAddsProduct = async (req, res) => {
     const { id } = req.params;
     const { name, quantity, price, image } = req.body;
 
-  
     const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -110,7 +113,9 @@ const userAddsProduct = async (req, res) => {
 
     await user.save();
 
-    res.status(201).json({ message: "Product added successfully", product: req.body });
+    res
+      .status(201)
+      .json({ message: "Product added successfully", product: req.body });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -24,11 +24,11 @@ export default function DropdownMenuProfile() {
           <ProfileAvatar />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className=" dark:bg-emerald-950 rounded-lg dark:rounded-lg ">
         <DropdownMenuLabel className="cursor-default">
           My Account
         </DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator/>
         <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
         <DropdownMenuItem className="cursor-pointer" onClick={handleLogout}>
           Logout

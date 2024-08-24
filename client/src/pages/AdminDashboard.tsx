@@ -51,8 +51,8 @@ export default function AdminDashboard(): JSX.Element {
   }
 
   return (
-    <div className="p-7 mx-8 rounded-lg bg-gray-200 dark:bg-gray-900 h-full">
-      <div className="bg-gray-100 dark:bg-gray-800 p-8 rounded-lg">
+    <div className="p-7 mx-8 rounded-lg h-screen">
+      <div className=" p-8 rounded-lg shadow-2xl bg-white dark:bg-transparent border dark:border-neutral-700">
         <ProductTable
           onProductChange={onProdutChange}
           products={products}

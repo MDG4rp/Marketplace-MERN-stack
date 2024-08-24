@@ -34,9 +34,9 @@ export default function ProductTable({
 
   return (
     <>
-      <Table>
+      <Table className=" ">
         <TableHeader>
-          <TableRow>
+          <TableRow className="hover:bg-transparent dark:hover:bg-transparent">
             <TableCell colSpan={6} className="text-center">
               <AddProductDialog
                 product={selectedProduct}
@@ -56,7 +56,7 @@ export default function ProductTable({
         </TableHeader>
         <TableBody>
           {products.map((product) => (
-            <TableRow key={product.id} className="hover:bg-gray-200">
+            <TableRow key={product.id} className="hover:bg-green-100">
               <TableCell className="font-medium">{product.id}</TableCell>
               <TableCell>{product.name}</TableCell>
               <TableCell className="text-center">{product.quantity}</TableCell>

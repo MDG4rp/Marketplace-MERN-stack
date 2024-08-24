@@ -38,7 +38,7 @@ export default function Products(): JSX.Element {
   }
 
   return (
-    <div className="container mx-auto p-4">
+    <div className=" mx-auto p-4 h-screen">
       <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6">
         Products
       </h1>
