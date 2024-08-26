@@ -37,6 +37,7 @@ import { updateRole } from "@/api/services/user-service";
 import UserInfo from "@/api/models/UserInfo";
 import { IoIosRefresh } from "react-icons/io";
 import { IoIosOptions } from "react-icons/io";
+import { format } from "date-fns";
 
 const handleDeleteUser = (userId: string) => {
   console.log(userId);
@@ -75,7 +76,9 @@ const columns: ColumnDef<UserInfo>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase text-center">{row.getValue("name")}</div>
+      <div className="lowercase text-left px-4 py-2">
+        {row.getValue("name")}
+      </div>
     ),
   },
   {
@@ -93,7 +96,9 @@ const columns: ColumnDef<UserInfo>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase text-center">{row.getValue("username")}</div>
+      <div className="lowercase text-left px-4 py-2">
+        {row.getValue("username")}
+      </div>
     ),
   },
   {
@@ -111,44 +116,61 @@ const columns: ColumnDef<UserInfo>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase text-center">{row.getValue("role")}</div>
+      <div className="lowercase text-left px-4 py-2">
+        {row.getValue("role")}
+      </div>
     ),
   },
   {
     accessorKey: "createdAt",
-    header: () => <div className="text-center">Created</div>,
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="dark:hover:bg-emerald-900 hover:bg-green-200"
+      >
+        Created At
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
     cell: ({ row }) => {
-      const createdAt = new Date(
-        row.getValue("createdAt")
-      ).toLocaleDateString();
-      return <div className="text-right font-medium">{createdAt}</div>;
+      const date = new Date(row.getValue("createdAt"));
+      const formattedDate = format(date, "dd MMM yyyy");
+      const formattedTime = format(date, "HH:mm");
+
+      return (
+        <div className="text-left px-4 py-2">
+          <div>{formattedDate}</div>
+          <div>{formattedTime}</div>
+        </div>
+      );
     },
   },
   {
     accessorKey: "updatedAt",
-    header: () => <div className="text-right">Last update</div>,
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="dark:hover:bg-emerald-900 hover:bg-green-200"
+      >
+        Updated At
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
     cell: ({ row }) => {
-      const createdAt = new Date(
-        row.getValue("updatedAt")
-      ).toLocaleDateString();
-      return <div className="text-right font-medium">{createdAt}</div>;
+      const date = new Date(row.getValue("updatedAt"));
+      const formattedDate = format(date, "dd MMM yyyy");
+      const formattedTime = format(date, "HH:mm");
+
+      return (
+        <div className="text-left px-4 py-2">
+          <div>{formattedDate}</div>
+          <div>{formattedTime}</div>
+        </div>
+      );
     },
   },
-  /* {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"))
-
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount)
-
-      return <div className="text-right font-medium">{formatted}</div>
-    },
-  }, */
   {
     id: "actions",
     header: "Actions",
@@ -159,9 +181,9 @@ const columns: ColumnDef<UserInfo>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-green-100">
+            <Button variant="ghost" className="px-4 py-2 hover:bg-transparent dark:hover:bg-transparent">
               <span className="sr-only">Open menu</span>
-              < IoIosOptions className="h-6 w-6" />
+              <IoIosOptions className="h-7 w-7" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="dark:bg-emerald-950">
@@ -173,7 +195,9 @@ const columns: ColumnDef<UserInfo>[] = [
             >
               Copy User ID
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">View User</DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer">
+              View User
+            </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() =>
                 handleUpdateRole(
@@ -185,7 +209,10 @@ const columns: ColumnDef<UserInfo>[] = [
             >
               Update to {user.role === "admin" ? "user" : "admin"}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleDeleteUser(user.userID)} className="cursor-pointer">
+            <DropdownMenuItem
+              onClick={() => handleDeleteUser(user.userID)}
+              className="cursor-pointer"
+            >
               Delete User
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -259,7 +286,10 @@ export function DataTableDemo({ data }: { data: UserInfo[] }) {
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="default" className="flex items-center space-x-2 bg-green-700 dark:text-white dark:bg-green-700 hover:bg-green-900 dark:hover:bg-green-900 ">
+              <Button
+                variant="default"
+                className="flex items-center space-x-2 bg-green-700 dark:text-white dark:bg-green-700 hover:bg-green-900 dark:hover:bg-green-900 "
+              >
                 <span>Columns</span>
                 <ChevronDown className="h-4 w-4" />
               </Button>
@@ -321,10 +351,7 @@ export function DataTableDemo({ data }: { data: UserInfo[] }) {
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-left"
-                >
+                <TableCell colSpan={columns.length} className="h-24 text-left">
                   No results.
                 </TableCell>
               </TableRow>
