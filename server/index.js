@@ -1,36 +1,43 @@
 const express = require("express");
 const mongoose = require("mongoose");
+require("dotenv").config();
+const cookieParser = require("cookie-parser");
 const productRoute = require("./routes/product.route");
 const authRoute = require("./routes/auth.route");
-const cookieParser = require("cookie-parser");
 const cors = require("cors");
-require("dotenv").config();
+const helmet = require("helmet");
 
 const app = express();
 const mongodbUri = process.env.MONGODB_URI;
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
-// middleware section
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+// Configurazione CORS
 app.use(
   cors({
     origin: "http://localhost:5173",
-    credentials: true,
+    credentials: true, 
   })
 );
-app.use(cookieParser());
 
-// routes
+// Middleware section
+app.use(cookieParser()); // Parsing dei cookie
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(helmet()); // Sicurezza delle intestazioni HTTP
+
+// Routes
 app.use("/", productRoute);
 app.use("/", authRoute);
 
+// Connessione al database MongoDB
 mongoose
   .connect(mongodbUri)
   .then(() => {
-    console.log("Connected!");
-
-    app.listen(port);
+    console.log("Connected to MongoDB!");
+    app.listen(port, () => {
+      console.log(`Server running on port ${port}`);
+    });
   })
-
-  .catch(() => console.log("Connection failed"));
+  .catch((err) => {
+    console.error("Connection failed", err);
+  });
