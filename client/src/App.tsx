@@ -15,12 +15,12 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import { PrivateRoute } from "./routes/PrivateRoute";
 import UserProducts from "./pages/UserProducts";
-
+import NotFoundPage from "./pages/NotFoundPage";
 const store = createStore({
   authName: "_auth",
   authType: "cookie",
   cookieDomain: window.location.hostname,
-  cookieSecure: false,
+  cookieSecure: window.location.protocol === "https:",
   refresh: refresh,
 });
 
@@ -34,6 +34,7 @@ export default function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Route>
             <Route path="/" element={<Layout />}>
               <Route element={<AuthOutlet fallbackPath="/" />}>

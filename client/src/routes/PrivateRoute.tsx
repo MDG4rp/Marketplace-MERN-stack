@@ -18,7 +18,7 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
   }
 
   if (requiredRole && auth.role !== requiredRole) {
-    return <Navigate to="/access-denied" />;
+    return <Navigate to="/*" />;
   }
 
   return children;

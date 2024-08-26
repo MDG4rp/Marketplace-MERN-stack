@@ -15,15 +15,15 @@ const port = process.env.PORT || 3000;
 app.use(
   cors({
     origin: "http://localhost:5173",
-    credentials: true, 
+    credentials: true,
   })
 );
 
 // Middleware section
-app.use(cookieParser()); // Parsing dei cookie
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(helmet()); // Sicurezza delle intestazioni HTTP
+app.use(helmet());
 
 // Routes
 app.use("/", productRoute);
