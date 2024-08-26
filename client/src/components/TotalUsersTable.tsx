@@ -67,7 +67,7 @@ const columns: ColumnDef<UserInfo>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className=" dark:hover:bg-emerald-900"
+          className=" dark:hover:bg-emerald-900 hover:bg-green-200"
         >
           Name
           <ArrowUpDown className="ml-2 h-4 w-4 " />
@@ -85,7 +85,7 @@ const columns: ColumnDef<UserInfo>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className=" dark:hover:bg-emerald-900"
+          className=" dark:hover:bg-emerald-900 hover:bg-green-200"
         >
           Username
           <ArrowUpDown className="ml-2 h-4 w-4" />
