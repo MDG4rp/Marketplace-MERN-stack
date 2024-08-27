@@ -16,6 +16,7 @@ import SignupPage from "./pages/SignupPage";
 import { PrivateRoute } from "./routes/PrivateRoute";
 import UserProducts from "./pages/UserProducts";
 import NotFoundPage from "./pages/NotFoundPage";
+import UserPage from "./pages/UserPage";
 const store = createStore({
   authName: "_auth",
   authType: "cookie",
@@ -70,6 +71,7 @@ export default function App() {
                     </PrivateRoute>
                   }
                 />
+                <Route path="/MyProfile" element={<UserPage />} />
               </Route>
             </Route>
           </Routes>

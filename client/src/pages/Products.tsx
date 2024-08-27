@@ -47,7 +47,7 @@ export default function Products(): JSX.Element {
   return (
     <div className="h-screen mx-auto p-4">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold dark:text-gray-100">Products</h1>
+        <h1 className="text-3xl font-bold dark:text-gray-100">Shop</h1>
         <div className="relative flex items-center w-1/3 h-12 rounded-lg bg-white dark:bg-transparent overflow-hidden border border-green-500 dark:border-neutral-700 hover:border-green-600 dark:hover:border-green-700 focus-within:ring-2 focus-within:ring-green-500">
           <div className="grid place-items-center h-full w-12 text-gray-300">
             <svg

@@ -38,19 +38,16 @@ import UserInfo from "@/api/models/UserInfo";
 import { IoIosRefresh } from "react-icons/io";
 import { IoIosOptions } from "react-icons/io";
 import { format } from "date-fns";
-
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import Auth from "@/api/models/auth";
 const handleDeleteUser = (userId: string) => {
   console.log(userId);
-  deleteUser(userId).then((res) => {
-    console.log(res);
-  });
+  deleteUser(userId).then(getAllUsers);
 };
 
 const handleUpdateRole = (userId: string, role: string) => {
   console.log(userId);
-  updateRole(userId, role).then((res) => {
-    console.log(res);
-  });
+  updateRole(userId, role).then(getAllUsers);
 };
 
 const columns: ColumnDef<UserInfo>[] = [
@@ -177,11 +174,17 @@ const columns: ColumnDef<UserInfo>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const user = row.original;
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const authUser = useAuthUser<Auth>();
+      const loggedInUserID = authUser?.id;
 
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="px-4 py-2 hover:bg-transparent dark:hover:bg-transparent">
+            <Button
+              variant="ghost"
+              className="px-4 py-2 hover:bg-transparent dark:hover:bg-transparent"
+            >
               <span className="sr-only">Open menu</span>
               <IoIosOptions className="h-7 w-7" />
             </Button>
@@ -198,23 +201,28 @@ const columns: ColumnDef<UserInfo>[] = [
             <DropdownMenuItem className="cursor-pointer">
               View User
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() =>
-                handleUpdateRole(
-                  user.userID,
-                  user.role === "admin" ? "user" : "admin"
-                )
-              }
-              className="cursor-pointer"
-            >
-              Update to {user.role === "admin" ? "user" : "admin"}
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => handleDeleteUser(user.userID)}
-              className="cursor-pointer"
-            >
-              Delete User
-            </DropdownMenuItem>
+            {user.userID !== loggedInUserID && (
+              <>
+                <DropdownMenuItem
+                  onClick={() =>
+                    handleUpdateRole(
+                      user.userID,
+                      user.role === "admin" ? "user" : "admin"
+                    )
+                  }
+                  className="cursor-pointer"
+                >
+                  {user.role === "admin" ? "Declass" : "Upgrade"} role to{" "}
+                  {user.role === "admin" ? "user" : "admin"}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => handleDeleteUser(user.userID)}
+                  className="cursor-pointer"
+                >
+                  Delete User
+                </DropdownMenuItem>
+              </>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       );

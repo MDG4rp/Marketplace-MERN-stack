@@ -140,10 +140,34 @@ const updateUserRole = async (req, res, next) => {
     next(error);
   }
 };
+
+const getUser = async (req, res, next) => {
+  const { id } = req.params;
+  const userIdFromToken = req.user.id;
+
+  if (userIdFromToken !== id) {
+    return res
+      .status(403)
+      .json({ message: "Forbidden: You can only view your own profile"});
+  }
+
+  try {
+    const user = await User.findById(id).select("-password");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ message: "User retrieved", user: user });
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   register,
   login,
   getAllUsers,
   deleteUser,
   updateUserRole,
+  getUser,
 };

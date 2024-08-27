@@ -9,18 +9,19 @@ const {
   updateProduct,
 } = require("../controllers/products.controller");
 const isAdmin = require("../middlewares/admin.middleware");
+const isAuth = require("../middlewares/auth.middleware");
 
 // Get all products
-router.get("/products", getProducts);
+router.get("/products", isAuth, getProducts);
 
 // Get all products for a specific user
-router.get("/:id/products", getUserProducts);
+router.get("/:id/products", isAuth, getUserProducts);
 
 // Admin creates a new product
 router.post("/products", isAdmin, addProduct);
 
 // User adds a product to their own list
-router.post("/:id/addProduct", userAddsProduct);
+router.post("/:id/addProduct", isAuth, userAddsProduct);
 
 // Admin updates a product
 router.put("/updateProduct/:id", isAdmin, updateProduct);

@@ -1,5 +1,6 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import useSignOut from "react-auth-kit/hooks/useSignOut";
 import DropdownMenuProfile from "./DropDownMenuProfile";
 import icon from "../assets/icon.svg";
 type AuthUser = {
@@ -10,19 +11,17 @@ type AuthUser = {
 
 export default function Navbar() {
   const auth = useAuthUser<AuthUser>();
+  const signOut = useSignOut();
 
   return (
     <nav className="p-4">
       <div className="mx-auto flex justify-between items-center">
-        <div className="flex items-center space-x-2 text-xl text-gray-900 dark:text-white">
-          <img
-            src={icon}
-            width={50}
-            height={50}
-            alt="logo"
-          />
-          <h1>Marketplace</h1>
-        </div>
+        <Link to={"/"} onClick={signOut}>
+          <div className="flex items-center space-x-2 text-2xl text-neutral-700 dark:text-white">
+            <img src={icon} width={50} height={50} alt="logo" />
+            <h1>Marketplace</h1>
+          </div>
+        </Link>
 
         <div className="flex space-x-4">
           {auth?.role === "admin" && (

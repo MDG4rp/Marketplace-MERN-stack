@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import ProfileAvatar from "./Avatar";
 import useSignOut from "react-auth-kit/hooks/useSignOut";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ModeToggle } from "./DarkModeToggle";
 export default function DropdownMenuProfile() {
   const signOut = useSignOut();
@@ -24,12 +24,17 @@ export default function DropdownMenuProfile() {
           <ProfileAvatar />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className=" dark:bg-emerald-950 rounded-lg dark:rounded-lg ">
+      <DropdownMenuContent
+        align="end"
+        className=" dark:bg-emerald-950 rounded-lg dark:rounded-lg "
+      >
         <DropdownMenuLabel className="cursor-default">
           My Account
         </DropdownMenuLabel>
-        <DropdownMenuSeparator/>
-        <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <Link to={"MyProfile"}>
+          <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
+        </Link>
         <DropdownMenuItem className="cursor-pointer" onClick={handleLogout}>
           Logout
         </DropdownMenuItem>
