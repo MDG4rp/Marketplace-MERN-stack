@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/card";
 import Product from "../api/models/Product";
 import { CartSheet } from "./CartSheet";
+import { RemoveProductDialog } from "./RemoveProductDialog";
 
 type ProductCardProps = {
   product: Product;
@@ -55,6 +56,9 @@ export default function ProductCard({
         </span>
         {type === "buy" && (
           <CartSheet product={product} onPurchaseSuccess={onPurchaseSuccess} />
+        )}
+        {type === "show" && (
+          <RemoveProductDialog product={product}/>
         )}
       </CardFooter>
     </Card>

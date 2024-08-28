@@ -156,7 +156,23 @@ export function getSearchedUserProducts({
     .get(`/${userId}/products`, { params })
     .then((response) => response.data)
     .catch((error) => {
-      console.error('Error fetching user products:', error);
+      console.error("Error fetching user products:", error);
+      throw error;
+    });
+}
+
+export function removeProductFromUser(
+  userId: string,
+  name: string,
+  quantity: number
+) {
+  return axiosInstance
+    .delete(`/${userId}/removeProduct`, {
+      data: { name, quantity },
+    })
+    .then((response) => console.log(response.data))
+    .catch((error) => {
+      console.log(error);
       throw error;
     });
 }

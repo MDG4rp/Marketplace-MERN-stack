@@ -118,6 +118,7 @@ export default function Products(): JSX.Element {
               product={product}
               onPurchaseSuccess={fetchProducts}
               type="show"
+              
             />
           ))
         ) : (
