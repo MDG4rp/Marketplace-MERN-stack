@@ -15,6 +15,9 @@ export function mapProduct(product: any) {
 
 export default function mapProducts(products: any) {
   return {
+    currentPage: products.currentPage,
+    totalPages: products.totalPages,
+    totalProducts: products.totalProducts,
     message: products.message,
     products: products.products.map((product: any) => mapProduct(product)),
   } as getAllProductsResponse;

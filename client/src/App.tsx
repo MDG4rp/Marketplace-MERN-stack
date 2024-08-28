@@ -17,6 +17,7 @@ import { PrivateRoute } from "./routes/PrivateRoute";
 import UserProducts from "./pages/UserProducts";
 import NotFoundPage from "./pages/NotFoundPage";
 import UserPage from "./pages/UserPage";
+import { ToastProvider } from "./api/context/ToastContext";
 const store = createStore({
   authName: "_auth",
   authType: "cookie",
@@ -27,56 +28,58 @@ const store = createStore({
 
 export default function App() {
   return (
-    <AuthProvider store={store}>
-      <ThemeProvider defaultTheme="dark">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<ExternalLayout />}>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<SignupPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Route>
-            <Route path="/" element={<Layout />}>
-              <Route element={<AuthOutlet fallbackPath="/" />}>
-                <Route
-                  path="/totalUsers"
-                  element={
-                    <PrivateRoute requiredRole="admin">
-                      <AdminManagement />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/totalProducts"
-                  element={
-                    <PrivateRoute requiredRole="admin">
-                      <AdminDashboard />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/products"
-                  element={
-                    <PrivateRoute requiredRole="user">
-                      <Products />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/userProducts"
-                  element={
-                    <PrivateRoute requiredRole="user">
-                      <UserProducts />
-                    </PrivateRoute>
-                  }
-                />
-                <Route path="/MyProfile" element={<UserPage />} />
+    <ToastProvider>
+      <AuthProvider store={store}>
+        <ThemeProvider defaultTheme="dark">
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<ExternalLayout />}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignupPage />} />
+                <Route path="*" element={<NotFoundPage />} />
               </Route>
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </ThemeProvider>
-    </AuthProvider>
+              <Route path="/" element={<Layout />}>
+                <Route element={<AuthOutlet fallbackPath="/" />}>
+                  <Route
+                    path="/totalUsers"
+                    element={
+                      <PrivateRoute requiredRole="admin">
+                        <AdminManagement />
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/totalProducts"
+                    element={
+                      <PrivateRoute requiredRole="admin">
+                        <AdminDashboard />
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/products"
+                    element={
+                      <PrivateRoute requiredRole="user">
+                        <Products />
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/userProducts"
+                    element={
+                      <PrivateRoute requiredRole="user">
+                        <UserProducts />
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route path="/MyProfile" element={<UserPage />} />
+                </Route>
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </ThemeProvider>
+      </AuthProvider>
+    </ToastProvider>
   );
 }

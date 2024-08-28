@@ -15,8 +15,10 @@ import Product from "../api/models/Product";
 import { BsCartPlus } from "react-icons/bs";
 
 import { buyProduct } from "@/api/services/product-service";
-import Auth from "@/api/models/auth";
+import Auth from "@/api/models/Auth";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import { useToastProvider } from "@/api/context/ToastContext";
+import { ToastType } from "@/api/models/ToastContext";
 
 interface CartSheetProps {
   product: Product;
@@ -27,23 +29,32 @@ export function CartSheet({ product, onPurchaseSuccess }: CartSheetProps) {
   const auth = useAuthUser<Auth>();
   const userID = auth?.id;
   const [selectedQuantity, setSelectedQuantity] = useState(1);
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const { showMessage } = useToastProvider();
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
     if (value > product.quantity) {
-      setError(`Cannot select more than ${product.quantity} items.`);
+      showMessage({
+        message: "Quantity exceeds available stock",
+        type: ToastType.ERROR,
+      });
       setSelectedQuantity(product.quantity);
     } else {
-      setError(null);
+      showMessage({
+        message: "Quantity updated successfully",
+        type: ToastType.SUCCESS,
+      });
       setSelectedQuantity(value);
     }
   };
 
   const handleBuyProduct = () => {
     if (!userID) {
-      setError("User not authenticated");
+      showMessage({
+        message: "Please login to buy products",
+        type: ToastType.ERROR,
+      });
       return;
     }
 
@@ -58,14 +69,19 @@ export function CartSheet({ product, onPurchaseSuccess }: CartSheetProps) {
         image: product.image,
       },
     })
-      .then((data) => {
-        console.log("Product bought successfully:", data);
+      .then(() => {
+        showMessage({
+          message: "Product purchased successfully",
+          type: ToastType.SUCCESS,
+        });
         setLoading(false);
         onPurchaseSuccess();
       })
-      .catch((error) => {
-        console.error("Error buying product:", error);
-        setError("Failed to buy product");
+      .catch(() => {
+        showMessage({
+          message: "Error buying product",
+          type: ToastType.ERROR,
+        });
         setLoading(false);
       });
   };
@@ -87,11 +103,17 @@ export function CartSheet({ product, onPurchaseSuccess }: CartSheetProps) {
 
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <div className="cursor-pointer p-2 rounded-full flex items-center group hover:bg-green-700 dark:hover:bg-green-700 group-hover:text-white">
-          <BsCartPlus className="text-2xl text-gray-600 dark:text-gray-400 group-hover:text-gray-200" />
+      {product.quantity === 0 ? (
+        <div className="cursor-not-allowed opacity-50 p-2 rounded-full flex items-center">
+          <BsCartPlus className="text-2xl text-gray-600 dark:text-gray-400" />
         </div>
-      </SheetTrigger>
+      ) : (
+        <SheetTrigger asChild>
+          <div className="cursor-pointer p-2 rounded-full flex items-center group hover:bg-green-500 dark:hover:bg-green-700">
+            <BsCartPlus className="text-2xl text-gray-600 dark:text-gray-400 group-hover:text-gray-200" />
+          </div>
+        </SheetTrigger>
+      )}
       <SheetContent className="bg-white dark:bg-emerald-950 text-gray-900 dark:text-gray-100 rounded-2xl rounded-r-none shadow-lg dark:shadow-none">
         <SheetHeader>
           <SheetTitle className="text-2xl font-semibold">
@@ -155,7 +177,6 @@ export function CartSheet({ product, onPurchaseSuccess }: CartSheetProps) {
                 className="w-2/3 p-2 border rounded-lg border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-transparent text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-green-700 dark:focus:ring-green-700"
               />
             </div>
-            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
             <div className="flex items-center space-x-4">
               <Label
                 htmlFor="totalPrice"
@@ -176,7 +197,7 @@ export function CartSheet({ product, onPurchaseSuccess }: CartSheetProps) {
           <SheetClose>
             <Button
               type="submit"
-              className="bg-green-700 hover:bg-green-900 dark:bg-green-700 dark:text-white dark:hover:text-black text-white rounded-lg shadow-md "
+              className="bg-green-500 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-900 dark:text-white text-white rounded-lg shadow-md "
               onClick={handleBuyProduct}
               disabled={loading}
             >

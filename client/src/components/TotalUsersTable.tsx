@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import * as React from "react";
 import {
   ColumnDef,
@@ -39,7 +40,9 @@ import { IoIosRefresh } from "react-icons/io";
 import { IoIosOptions } from "react-icons/io";
 import { format } from "date-fns";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
-import Auth from "@/api/models/auth";
+import Auth from "@/api/models/Auth";
+import { useToastProvider } from "@/api/context/ToastContext";
+import { ToastType } from "@/api/models/ToastContext";
 const handleDeleteUser = (userId: string) => {
   console.log(userId);
   deleteUser(userId).then(getAllUsers);
@@ -174,7 +177,6 @@ const columns: ColumnDef<UserInfo>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const user = row.original;
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const authUser = useAuthUser<Auth>();
       const loggedInUserID = authUser?.id;
 
@@ -197,9 +199,6 @@ const columns: ColumnDef<UserInfo>[] = [
               className="cursor-pointer"
             >
               Copy User ID
-            </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">
-              View User
             </DropdownMenuItem>
             {user.userID !== loggedInUserID && (
               <>
@@ -230,9 +229,9 @@ const columns: ColumnDef<UserInfo>[] = [
   },
 ];
 
-export function DataTableDemo({ data }: { data: UserInfo[] }) {
+export function DataTable({ data }: { data: UserInfo[] }) {
   React.useEffect(() => {}, [data]);
-
+  const { showMessage } = useToastProvider();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -241,10 +240,18 @@ export function DataTableDemo({ data }: { data: UserInfo[] }) {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const [tableData, setTableData] = React.useState<UserInfo[]>(data);
+
   const handleRefresh = () => {
-    getAllUsers().then((res) => {
-      setTableData(res);
-    });
+    getAllUsers()
+      .then((res) => {
+        setTableData(res);
+      })
+      .catch(() =>
+        showMessage({
+          message: "Failed to refresh users",
+          type: ToastType.ERROR,
+        })
+      );
   };
 
   const table = useReactTable({
@@ -285,7 +292,7 @@ export function DataTableDemo({ data }: { data: UserInfo[] }) {
         <div className="flex items-center space-x-2">
           <Button
             onClick={handleRefresh}
-            className="dark:bg-green-700 bg-green-700 hover:bg-green-900 dark:hover:bg-green-900"
+            className="dark:bg-green-700 bg-green-500 hover:bg-green-700 dark:hover:bg-green-900"
           >
             <IoIosRefresh
               size="1rem"
@@ -296,7 +303,7 @@ export function DataTableDemo({ data }: { data: UserInfo[] }) {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="default"
-                className="flex items-center space-x-2 bg-green-700 dark:text-white dark:bg-green-700 hover:bg-green-900 dark:hover:bg-green-900 "
+                className="flex items-center space-x-2 bg-green-500 dark:text-white dark:bg-green-700 hover:bg-green-700 dark:hover:bg-green-900 "
               >
                 <span>Columns</span>
                 <ChevronDown className="h-4 w-4" />
@@ -373,7 +380,7 @@ export function DataTableDemo({ data }: { data: UserInfo[] }) {
           size="sm"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
-          className="dark:bg-green-700 hover:bg-black text-white bg-green-700 dark:hover:bg-green-700"
+          className="dark:bg-green-700 hover:bg-green-700 text-white bg-green-500 dark:hover:bg-green-700"
         >
           Previous
         </Button>
@@ -382,7 +389,7 @@ export function DataTableDemo({ data }: { data: UserInfo[] }) {
           size="sm"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
-          className="dark:bg-green-700 hover:bg-black bg-green-700 text-white dark:hover:bg-green-700"
+          className="dark:bg-green-700 hover:bg-green-700 bg-green-500 text-white dark:hover:bg-green-700"
         >
           Next
         </Button>

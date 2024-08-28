@@ -14,7 +14,6 @@ export function login(user: LoginInfo) {
       return response.data;
     })
     .catch((error) => {
-      console.error("Error while logging in: ", error);
       throw error;
     });
 }

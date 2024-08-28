@@ -1,15 +1,31 @@
 import { useEffect, useState } from "react";
-import Auth from "@/api/models/auth";
+import Auth from "@/api/models/Auth";
 import { getUser } from "@/api/services/user-service";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import UserInfo from "@/api/models/UserInfo";
 import { format } from "date-fns";
+import { useToastProvider } from "@/api/context/ToastContext";
+import { ToastType } from "@/api/models/ToastContext";
+import useSignOut from "react-auth-kit/hooks/useSignOut";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 export default function UserPage() {
+  const {showMessage} = useToastProvider();
   const auth = useAuthUser<Auth>();
+  const signOut = useSignOut();
+  const navigate = useNavigate();
   const [userData, setUserData] = useState<UserInfo>();
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+
+  const handleLogout = () => {
+    showMessage({
+      message: "Logged out successfully",
+      type: ToastType.SUCCESS,
+    });
+    signOut();
+    navigate("/login");
+  };
 
   function formatDate(data:string){
     const date = new Date(data);
@@ -28,13 +44,15 @@ export default function UserPage() {
         setLoading(false);
       })
       .catch(() => {
-        setError("Failed to fetch user data.");
+        showMessage({
+          message: "Error fetching user data",
+          type: ToastType.ERROR,
+        });
         setLoading(false);
       });
   }, []);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
 
   return (
     <div className="max-w-4xl h-screen mx-auto px-4">
@@ -73,6 +91,7 @@ export default function UserPage() {
             <strong>Updated At:</strong> {`${formatDate(userData?.updatedAt || "").formattedDate} at ${formatDate(userData?.updatedAt || "").formattedTime}`}
           </p>
         </div>
+      <Button onClick={handleLogout}>Log Out</Button>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/card";
 import Product from "../api/models/Product";
 import { CartSheet } from "./CartSheet";
+
 type ProductCardProps = {
   product: Product;
   type: "buy" | "show";
@@ -18,13 +19,23 @@ export default function ProductCard({
   type,
   onPurchaseSuccess,
 }: ProductCardProps) {
-  const formattedPrice = product.price.toLocaleString("it-IT", {
-    style: "currency",
-    currency: "EUR",
-  });
+  const formatPrice = (price: number) => {
+    return price % 1 === 0
+      ? price.toLocaleString("it-IT", {
+          style: "currency",
+          currency: "EUR",
+          minimumFractionDigits: 0,
+        })
+      : price.toLocaleString("it-IT", { style: "currency", currency: "EUR" });
+  };
+  const formattedPrice = formatPrice(product.price);
 
   return (
-    <Card className="bg-white dark:bg-transparent dark:border-green-700 text-gray-900 dark:text-gray-100 shadow-2xl rounded-lg">
+    <Card
+      className={`bg-white dark:bg-transparent dark:border-green-700 text-gray-900 dark:text-gray-100 shadow-2xl rounded-lg ${
+        product.quantity === 0 ? "opacity-50" : ""
+      }`}
+    >
       <CardHeader>
         <img
           src={product.image}

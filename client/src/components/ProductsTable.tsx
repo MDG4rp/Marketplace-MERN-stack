@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -9,13 +9,12 @@ import {
 } from "@/components/ui/table";
 import Product from "@/api/models/Product";
 import { Trash2 } from "lucide-react";
-import { AddProductDialog } from "@/components/AddProductDialog";
 import { EditProductDialog } from "@/components/EditProductDialog";
 
 interface ProductTableProps {
   products: Product[];
   onDeleteProduct: (id: string) => void;
-  onProductChange: () => void;
+  onProductChange: (searchQuery?: string) => void;
 }
 
 export default function ProductTable({
@@ -23,28 +22,34 @@ export default function ProductTable({
   onDeleteProduct,
   onProductChange,
 }: ProductTableProps) {
-  const [selectedProduct, setSelectedProduct] = useState<Product>();
+  const [, setSelectedProduct] = useState<Product>();
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const handleOpenAddDialog = (product?: Product) => {
-    setSelectedProduct(product);
-  };
   const handleOpenEditDialog = (product?: Product) => {
     setSelectedProduct(product);
   };
 
+  useEffect(() => {
+    onProductChange(searchQuery);
+  }, [searchQuery, onProductChange]);
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
   return (
     <>
-      <Table className=" ">
+      <div className="flex justify-end">
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="w-1/3 px-4 py-2 border-2 border-green-500 rounded-lg focus:outline-none focus:border-green-700 dark:border-neutral-700 dark:bg-transparent hover:border-green-600 dark:hover:border-green-700 focus-within:ring-2 focus-within:ring-green-500"
+        />
+      </div>
+      <Table>
         <TableHeader>
-          <TableRow className="hover:bg-transparent dark:hover:bg-transparent">
-            <TableCell colSpan={6} className="text-center">
-              <AddProductDialog
-                product={selectedProduct}
-                handleOpenAddDialog={() => handleOpenAddDialog()}
-                onProducttChange={onProductChange}
-              />
-            </TableCell>
-          </TableRow>
           <TableRow>
             <TableHead>Product ID</TableHead>
             <TableHead>Name</TableHead>

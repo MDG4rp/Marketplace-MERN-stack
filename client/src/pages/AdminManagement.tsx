@@ -1,9 +1,12 @@
 import { getAllUsers } from "@/api/services/user-service";
 import UserInfo from "@/api/models/UserInfo";
 import { useState, useEffect } from "react";
-import { DataTableDemo } from "@/components/TotalUsersTable";
+import { DataTable } from "@/components/TotalUsersTable";
+import { useToastProvider } from "@/api/context/ToastContext";
+import { ToastType } from "@/api/models/ToastContext";
 
 export default function AdminManagement(): JSX.Element {
+  const { showMessage } = useToastProvider();
   const [users, setUsers] = useState<UserInfo[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -13,8 +16,11 @@ export default function AdminManagement(): JSX.Element {
         setUsers(response);
         setLoading(false);
       })
-      .catch((error: string) => {
-        console.error("Error fetching users:", error);
+      .catch(() => {
+        showMessage({
+          message: "Error fetching users",
+          type: ToastType.ERROR,
+        });
       });
   }, []);
 
@@ -29,9 +35,9 @@ export default function AdminManagement(): JSX.Element {
   }
 
   return (
-    <div className="p-7 mx-8 rounded-lg h-screen">
+    <div className="p-7 mx-8 rounded-lg">
       <div className="p-6 rounded-lg flex flex-col items-center">
-        <DataTableDemo data={users} />
+        <DataTable data={users} />
       </div>
     </div>
   );

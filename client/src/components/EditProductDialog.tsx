@@ -15,6 +15,8 @@ import { Label } from "@/components/ui/label";
 import Product from "@/api/models/Product";
 import { editProduct } from "@/api/services/product-service";
 import { Pencil } from "lucide-react";
+import { useToastProvider } from "@/api/context/ToastContext";
+import { ToastType } from "@/api/models/ToastContext";
 
 interface ProductDialogProps {
   product: Product;
@@ -30,15 +32,23 @@ export function EditProductDialog({
   const [name, setName] = useState(product.name || "");
   const [price, setPrice] = useState(product?.price || 0);
   const [quantity, setQuantity] = useState(product?.quantity || 0);
+  const { showMessage } = useToastProvider();
 
   const handleSubmit = async () => {
     try {
       if (product) {
         await editProduct(product.id || "", { name, price, quantity });
         onProductChange();
+        showMessage({
+          message: "Product edited successfully",
+          type: ToastType.SUCCESS,
+        });
       }
-    } catch (error) {
-      console.error("Error submitting product:", error);
+    } catch {
+      showMessage({
+        message: "Error editing product",
+        type: ToastType.ERROR,
+      });
     }
   };
 
@@ -99,7 +109,11 @@ export function EditProductDialog({
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="button" onClick={handleSubmit} className="bg-green-700 hover:bg-green-900 text-white dark:bg-green-700 dark:text-white dark:hover:bg-green-900 dark:hover:text-white">
+            <Button
+              type="button"
+              onClick={handleSubmit}
+              className="bg-green-500 hover:bg-green-700 text-white dark:bg-green-700 dark:text-white dark:hover:bg-green-900 dark:hover:text-white"
+            >
               Edit product
             </Button>
           </DialogClose>

@@ -3,28 +3,65 @@ import { axiosInstance } from "@/lib/axios";
 import mapProducts from "../mappers/products-mapper";
 const api = import.meta.env.VITE_API_URL;
 
-export function getAllProducts() {
+interface PaginationParams {
+  search?: string;
+  page?: number;
+  limit?: number;
+}
+
+export function getAllProducts({
+  search,
+  page = 1,
+  limit = 5,
+}: PaginationParams) {
   return axiosInstance
-    .get(`${api}/products`)
+    .get(`${api}/products`, {
+      params: {
+        search,
+        page,
+        limit,
+      },
+    })
     .then((response) => {
       const mappedResponse = mapProducts(response.data);
-      console.log("mapped: ", mappedResponse.products);
-      return mappedResponse.products;
+      return {
+        products: mappedResponse.products,
+        currentPage: response.data.currentPage,
+        totalPages: response.data.totalPages,
+        totalProducts: response.data.totalProducts,
+        message: response.data.message,
+      };
     })
     .catch((error) => {
-      console.error("Error fetching products:", error);
       throw error;
     });
 }
 
-export function getUserProducts(userId: string) {
+export function getUserProducts({
+  userId,
+  search,
+  page = 1,
+  limit = 10,
+}: {
+  userId: string;
+  search?: string;
+  page?: number;
+  limit?: number;
+}) {
   return axiosInstance
-    .get(`${api}/${userId}/products`)
+    .get(`${api}/${userId}/products`, {
+      params: { search, page, limit },
+    })
     .then((response) => {
-      return response.data;
+      const mappedResponse = mapProducts(response.data);
+      return {
+        products: mappedResponse.products,
+        currentPage: response.data.page,
+        totalPages: response.data.totalPages,
+        totalProducts: response.data.totalProducts,
+      };
     })
     .catch((error) => {
-      console.error("Error fetching user products:", error);
       throw error;
     });
 }
@@ -36,7 +73,6 @@ export function deleteProduct(productId: string) {
       return response.data;
     })
     .catch((error) => {
-      console.error("Error deleting product:", error);
       throw error;
     });
 }
@@ -54,7 +90,6 @@ export function buyProduct({
       return response.data;
     })
     .catch((error) => {
-      console.error("Error buying product:", error);
       throw error;
     });
 }
@@ -66,29 +101,62 @@ export function addProduct(newProduct: Product) {
       return response.data;
     })
     .catch((error) => {
-      console.error("Error adding product:", error);
-      throw error;
-    });
-}
-export function editProduct(productId: string, updatedProduct: Product) {
-  return axiosInstance
-    .put(`${api}/updateProduct/${productId}`, updatedProduct)
-    .then((response) => {
-      console.log("Product edited successfully:", response.data);
-      return response.data;
-    })
-    .catch((error) => {
-      console.error("Error editing product:", error);
       throw error;
     });
 }
 
-export function getSearchedProducts({ search }: { search: string }) {
+export function editProduct(productId: string, updatedProduct: Product) {
+  return axiosInstance
+    .put(`${api}/updateProduct/${productId}`, updatedProduct)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+}
+
+export function getSearchedProducts({
+  search,
+  page = 1,
+  limit = 10,
+}: {
+  search: string;
+  page?: number;
+  limit?: number;
+}) {
   return axiosInstance
     .get("/products", {
-      params: {
-        search,
-      },
+      params: { search, page, limit },
     })
-    .then((data) => mapProducts(data.data));
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+}
+
+export function getSearchedUserProducts({
+  userId,
+  search,
+  page = 1,
+  limit = 10,
+}: {
+  userId: string;
+  search?: string;
+  page?: number;
+  limit?: number;
+}) {
+  const params = {
+    search,
+    page,
+    limit,
+  };
+
+  return axiosInstance
+    .get(`/${userId}/products`, { params })
+    .then((response) => response.data)
+    .catch((error) => {
+      console.error('Error fetching user products:', error);
+      throw error;
+    });
 }

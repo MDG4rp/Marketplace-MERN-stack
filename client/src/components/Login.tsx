@@ -6,10 +6,13 @@ import LoginInfo from "../api/models/LoginInfo";
 import LoginResponse from "../api/models/LoginResponse";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import { axiosInstance } from "../lib/axios";
+import { useToastProvider } from "@/api/context/ToastContext";
+import { ToastType } from "@/api/models/ToastContext";
 
 export default function Login() {
   const signIn = useSignIn();
   const navigate = useNavigate();
+  const { showMessage } = useToastProvider();
 
   const onLoginSubmit: SubmitHandler<LoginInfo> = async ({
     username,
@@ -18,14 +21,6 @@ export default function Login() {
     try {
       const response: LoginResponse = await login({ username, password });
       const { jwt, refreshToken, id, name, role } = response;
-
-      console.log("Received login response:", {
-        jwt,
-        refreshToken,
-        id,
-        name,
-        role,
-      });
 
       const isSignedIn = signIn({
         auth: {
@@ -44,13 +39,22 @@ export default function Login() {
         axiosInstance.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${jwt}`;
-        console.log("SignIn successful, navigating...");
+        showMessage({
+          message: "Login successfully",
+          type: ToastType.SUCCESS,
+        });
         navigate(role === "admin" ? "/totalUsers" : "/products");
       } else {
-        console.log("Authentication failed");
+        showMessage({
+          message: "Failed to sign in, check your credentials",
+          type: ToastType.ERROR,
+        });
       }
-    } catch (error) {
-      console.error("Login error:", error);
+    } catch {
+      showMessage({
+        message: "Failed to sign in, check your credentials",
+        type: ToastType.ERROR,
+      });
     }
   };
 

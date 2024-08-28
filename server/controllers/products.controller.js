@@ -5,14 +5,25 @@ require("dotenv").config();
 const api = process.env.API_URL;
 
 const getProducts = async (req, res) => {
-
   try {
-    // ricerca
-    const { search } = req.query;
+    const { search, page = 1, limit = 10 } = req.query;
+    const pageNumber = parseInt(page, 10);
+    const pageSize = parseInt(limit, 10);
+    const skip = (pageNumber - 1) * pageSize;
+
     const query = search ? { name: { $regex: search, $options: "i" } } : {};
-    const products = await Product.find(query);
+
+    const products = await Product.find(query).skip(skip).limit(pageSize);
+
+    const totalProducts = await Product.countDocuments(query);
+
+    const totalPages = Math.ceil(totalProducts / pageSize);
+
     res.status(200).json({
       products: products,
+      currentPage: pageNumber,
+      totalPages: totalPages,
+      totalProducts: totalProducts,
       message: "Products fetched successfully",
     });
   } catch (error) {
@@ -22,13 +33,34 @@ const getProducts = async (req, res) => {
 
 const getUserProducts = async (req, res) => {
   try {
-    const { id } = req.params;
-    const user = await User.findById(id).populate("products");
+    const { search, page = 1, limit = 10 } = req.query;
+    const pageNumber = parseInt(page, 10);
+    const pageSize = parseInt(limit, 10);
+    const skip = (pageNumber - 1) * pageSize;
+    const query = search ? new RegExp(search, "i") : null;
 
+    const { id } = req.params;
+
+    const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    res.status(200).json(user.products);
+
+    const filteredProducts = user.products.filter((product) =>
+      query ? query.test(product.name) : true
+    );
+
+    const totalProducts = filteredProducts.length;
+    const paginatedProducts = filteredProducts.slice(skip, skip + pageSize);
+    const totalPages = Math.ceil(totalProducts / pageSize);
+
+    res.status(200).json({
+      products: paginatedProducts,
+      currentPage: pageNumber,
+      totalPages: totalPages,
+      totalProducts: totalProducts,
+      message: "Products fetched successfully",
+    });
   } catch (error) {
     console.error("Error fetching user products:", error);
     res.status(500).json({ message: error.message });

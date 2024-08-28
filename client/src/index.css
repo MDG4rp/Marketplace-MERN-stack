@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
 @layer base {
   :root {
     background: linear-gradient(to bottom, #fffeff, #c4fdd4);
@@ -76,10 +70,41 @@
   background: #022c22;
 }
 
-.sheetLight{
+.sheetLight {
   background: linear-gradient(to bottom, #fffeff, #c4fdd4);
 }
 
-.DropDarkCustom{
+.DropDarkCustom {
   background-color: #042d21;
 }
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+.toast-enter {
+  animation: slideInUp 0.5s forwards;
+}
+
+.toast-exit {
+  animation: slideOutDown 0.5s forwards;
+}
+

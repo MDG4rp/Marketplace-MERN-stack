@@ -14,6 +14,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Product from "@/api/models/Product";
 import { addProduct } from "@/api/services/product-service";
+import { useToastProvider } from "@/api/context/ToastContext";
+import { ToastType } from "@/api/models/ToastContext";
 
 interface ProductDialogProps {
   product?: Product;
@@ -30,13 +32,29 @@ export function AddProductDialog({
   const [price, setPrice] = useState(product?.price || 0);
   const [quantity, setQuantity] = useState(product?.quantity || 0);
   const [image, setImage] = useState(product?.image || "");
+  const { showMessage } = useToastProvider();
 
   const handleSubmit = async () => {
     try {
       await addProduct({ name, price, quantity, image });
       onProducttChange();
-    } catch (error) {
-      console.error("Error submitting product:", error);
+      showMessage({
+        message: "Product added successfully",
+        type: ToastType.SUCCESS,
+      });
+      setName("");
+      setPrice(0);
+      setQuantity(0);
+      setImage("");
+    } catch {
+      showMessage({
+        message: "Error adding product",
+        type: ToastType.ERROR,
+      });
+      setName("");
+      setPrice(0);
+      setQuantity(0);
+      setImage("");
     }
   };
 
@@ -46,7 +64,7 @@ export function AddProductDialog({
         <Button
           variant="default"
           onClick={() => handleOpenAddDialog()}
-          className="bg-green-700 text-white dark:bg-green-700 dark:text-white dark:hover:bg-green-900 hover:bg-green-900 dark:hover:text-white"
+          className="bg-green-500 text-white dark:bg-green-700 dark:text-white dark:hover:bg-green-900 hover:bg-green-700 dark:hover:text-white"
         >
           Add Product
         </Button>
@@ -110,7 +128,7 @@ export function AddProductDialog({
         <DialogFooter>
           <DialogClose
             onClick={handleSubmit}
-            className="bg-green-700 text-white dark:bg-green-700 hover:bg-green-900 dark:hover:bg-green-900 dark:text-white px-4 py-2 rounded-md"
+            className="bg-green-500 text-white dark:bg-green-700 hover:bg-green-700 dark:hover:bg-green-900 dark:text-white px-4 py-2 rounded-md"
           >
             Add Product
           </DialogClose>
