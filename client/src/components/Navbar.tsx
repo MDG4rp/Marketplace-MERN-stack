@@ -40,7 +40,7 @@ export default function Navbar() {
         </button>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-4 mr-[5rem]">
+        <div className="hidden md:flex space-x-4 mr-[1.5rem]">
           {auth?.role === "admin" && (
             <>
               <NavLink
