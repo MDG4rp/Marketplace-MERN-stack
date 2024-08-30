@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const ProductSchema = new mongoose.Schema(
   {
@@ -11,9 +11,9 @@ const ProductSchema = new mongoose.Schema(
       type: Number,
       required: true,
       default: 0,
-      validate(value) {
+      validate(value: number) {
         if (value < 0) throw new Error("Quantity cannot be negative");
-      }
+      },
     },
     price: {
       type: Number,
@@ -33,4 +33,4 @@ const ProductSchema = new mongoose.Schema(
 
 const Product = mongoose.model("Product", ProductSchema);
 
-module.exports = { Product, ProductSchema };
+export default Product;
