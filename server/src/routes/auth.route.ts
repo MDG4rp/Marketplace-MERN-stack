@@ -8,6 +8,7 @@ import {
   getAllUsers,
 } from "../controllers/auth.controller";
 import isAuth from "../middlewares/isAuth.middleware";
+import isAdmin from "../middlewares/admin.middleware";
 
 const router = Router();
 
@@ -18,15 +19,15 @@ router.post("/register", register);
 router.post("/login", login);
 
 // Route per aggiornare il ruolo dell'utente (solo per admin)
-router.put("/updateUserRole/:id", updateUserRole);
+router.put("/updateUserRole/:id", isAdmin, updateUserRole);
 
 // Route per eliminare un utente (solo per admin)
-router.delete("/deleteUser/:id", deleteUser);
+router.delete("/deleteUser/:id", isAdmin, deleteUser);
 
-// Route per ottenere informazioni su un utente specifico
-router.get("/getUser/:id",isAuth, getUser);
+// Route per ottenere le proprie informazioni di profilo
+router.get("/getUser/:id", isAuth, getUser);
 
 // Route per ottenere tutti gli utenti (solo per admin)
-router.get("/userslist", getAllUsers);
+router.get("/userslist", isAdmin, getAllUsers);
 
 export default router;
