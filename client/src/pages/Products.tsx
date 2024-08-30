@@ -123,12 +123,12 @@ export default function Products(): JSX.Element {
           Previous
         </Button>
         <span className="text-lg">
-          {currentPage} / {totalPages}
+          {totalPages != 0 ? `${currentPage} / ${totalPages}` : "/"}
         </span>
         <Button
           className="px-4 py-2 bg-green-500 dark:bg-green-700 dark:hover:bg-green-900 dark:text-white text-white rounded-lg enabled:hover:bg-green-700 disabled:opacity-50"
           onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
+          disabled={currentPage === totalPages || totalPages === 0}
         >
           Next
         </Button>

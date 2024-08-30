@@ -33,7 +33,7 @@ export function RemoveProductDialog({ product }: ProductDialogProps) {
   const handleSubmit = async () => {
     try {
       if (product) {
-        await removeProductFromUser(id || "", product.name || "",quantity);
+        await removeProductFromUser(id || "", product.name || "", quantity);
         showMessage({
           message: "Product removed successfully",
           type: ToastType.SUCCESS,
@@ -49,15 +49,23 @@ export function RemoveProductDialog({ product }: ProductDialogProps) {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <span className="inline-flex items-center cursor-pointer">
-          <Trash2 size={16} />
-        </span>
-      </DialogTrigger>
+      {product.quantity === 0 ? (
+        <div className="cursor-not-allowed opacity-50 p-2 rounded-full flex items-center">
+          <Trash2 className="text-2xl text-gray-600 dark:text-gray-400" />
+        </div>
+      ) : (
+        <DialogTrigger asChild>
+          <div className="cursor-pointer p-2 rounded-full flex items-center group hover:bg-green-500 dark:hover:bg-green-700">
+            <Trash2 className="text-2xl text-gray-600 dark:text-gray-400 group-hover:text-gray-200" />
+          </div>
+        </DialogTrigger>
+      )}
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Remove this product</DialogTitle>
-          <DialogDescription>Confirm the removal of the product</DialogDescription>
+          <DialogDescription>
+            Confirm the removal of the product
+          </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">

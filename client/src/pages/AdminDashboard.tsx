@@ -96,11 +96,11 @@ export default function AdminDashboard(): JSX.Element {
                 Previous
               </Button>
               <span className="self-center">
-                {page} of {totalPages}
+                {totalPages != 0 ? `${page} / ${totalPages}` : "/"}
               </span>
               <Button
                 onClick={handleNextPage}
-                disabled={page === totalPages}
+                disabled={page === totalPages || totalPages === 0}
                 className="dark:bg-green-700 dark:text-white hover:bg-green-700 bg-green-500 text-white dark:hover:bg-green-900"
               >
                 Next
