@@ -1,4 +1,4 @@
-import { UserDocument } from "./UserDocument"; // Assicurati che il percorso sia corretto
+import { UserDocument } from "./UserDocument";
 
 declare global {
   namespace Express {

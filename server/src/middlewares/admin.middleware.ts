@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-config(); // Carica subito le variabili d'ambiente
+config();
 
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";

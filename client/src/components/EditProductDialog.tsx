@@ -32,12 +32,13 @@ export function EditProductDialog({
   const [name, setName] = useState(product.name || "");
   const [price, setPrice] = useState(product?.price || 0);
   const [quantity, setQuantity] = useState(product?.quantity || 0);
+  const [image, setImage] = useState(product?.image || "");
   const { showMessage } = useToastProvider();
 
   const handleSubmit = async () => {
     try {
       if (product) {
-        await editProduct(product.id || "", { name, price, quantity });
+        await editProduct(product.id || "", { name, price, quantity,image });
         onProductChange();
         showMessage({
           message: "Product edited successfully",
@@ -104,6 +105,19 @@ export function EditProductDialog({
               onChange={(e) => setQuantity(Number(e.target.value))}
               className="col-span-3 dark:text-black focus:ring-green-700"
               placeholder={quantity.toString()}
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="image" className="text-right">
+              Image URL
+            </Label>
+            <Input
+              id="image"
+              type="string"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+              className="col-span-3 dark:text-black focus:ring-green-700"
+              placeholder={image}
             />
           </div>
         </div>
