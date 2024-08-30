@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ModeToggle } from "./DarkModeToggle";
+import { Home, LogIn, UserPlus } from "lucide-react";
 
 export default function ExternalNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,12 +16,15 @@ export default function ExternalNavbar() {
         <Link to={"/"}>
           <img src="/src/assets/icon.svg" alt="logo" width="50px" />
         </Link>
-        <Link to="/" className="text-2xl text-neutral-700 dark:text-white">
-          Marketplace
+        <Link
+          to="/"
+          className="flex items-center space-x-2 text-2xl text-neutral-700 dark:text-white"
+        >
+          <span>Marketplace</span>
         </Link>
       </div>
       <div className="flex items-center w-full md:hidden">
-        <Link to={"/"} className="mr-auto">
+        <Link to={"/"} className="mr-auto flex items-center space-x-2">
           <img src="/src/assets/icon.svg" alt="logo" width="50px" />
         </Link>
         <button
@@ -32,7 +36,7 @@ export default function ExternalNavbar() {
         </button>
       </div>
       <div
-        className={`fixed inset-0 bg-green-100 dark:bg-emerald-950 flex flex-col items-center justify-center space-y-4 p-6 z-50 md:hidden transform transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-0 bg-green-100 dark:bg-emerald-950 flex flex-col items-left justify-start space-y-4 p-6 z-50 md:hidden transform transition-transform duration-300 ease-in-out ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -45,24 +49,27 @@ export default function ExternalNavbar() {
         </button>
         <Link
           to="/"
-          className="text-xl text-neutral-700 dark:text-white transition-transform duration-300 ease-in-out hover:scale-105"
+          className="flex items-center space-x-2 text-xl text-neutral-700 dark:text-white transition-transform duration-300 ease-in-out hover:scale-105"
           onClick={toggleMenu}
         >
-          Home
+          <Home className="w-6 h-6" />
+          <span>Home</span>
         </Link>
         <Link
           to="/login"
-          className="text-xl text-neutral-700 dark:text-white transition-transform duration-300 ease-in-out hover:scale-105"
+          className="flex items-center space-x-2 text-xl text-neutral-700 dark:text-white transition-transform duration-300 ease-in-out hover:scale-105"
           onClick={toggleMenu}
         >
-          Login
+          <LogIn className="w-6 h-6" />
+          <span>Login</span>
         </Link>
         <Link
           to="/signup"
-          className="text-xl text-neutral-700 dark:text-white transition-transform duration-300 ease-in-out hover:scale-105"
+          className="flex items-center space-x-2 text-xl text-neutral-700 dark:text-white transition-transform duration-300 ease-in-out hover:scale-105"
           onClick={toggleMenu}
         >
-          Register
+          <UserPlus className="w-6 h-6" />
+          <span>Register</span>
         </Link>
         <ModeToggle />
       </div>

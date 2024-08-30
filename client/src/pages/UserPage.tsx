@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 export default function UserPage() {
-  const {showMessage} = useToastProvider();
+  const { showMessage } = useToastProvider();
   const auth = useAuthUser<Auth>();
   const signOut = useSignOut();
   const navigate = useNavigate();
@@ -27,11 +27,12 @@ export default function UserPage() {
     navigate("/login");
   };
 
-  function formatDate(data:string){
+  function formatDate(data: string) {
     const date = new Date(data);
-    const formattedDate = format(date, "dd MMM yyyy");
-    const formattedTime = format(date, "HH:mm");
-    return { formattedDate, formattedTime };
+    return {
+      formattedDate: format(date, "dd MMM yyyy"),
+      formattedTime: format(date, "HH:mm"),
+    };
   }
 
   const id = auth?.id || "";
@@ -50,49 +51,49 @@ export default function UserPage() {
         });
         setLoading(false);
       });
-  }, []);
+  }, [id, showMessage]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="text-center text-lg text-gray-400">Loading...</p>;
 
   return (
-    <div className="max-w-4xl h-screen mx-auto px-4">
-      <div className=" h-48 rounded-xl">
+    <div className="flex flex-col items-center h-full bg-transparent text-gray-900 dark:text-white">
+      <header className="w-full">
         <img
-          src={
-            "https://cdn.pixabay.com/photo/2016/11/21/03/56/landscape-1844227_1280.png"
-          }
+          src="https://cdn.pixabay.com/photo/2018/03/20/03/11/northern-lights-3242090_1280.jpg"
           alt="Cover"
-          className="w-full h-full object-cover rounded-2xl"
+          className="w-full h-48 object-cover rounded-b-lg"
+        />
+      </header>
+      <div className="w-36 h-36 -mt-16 rounded-full overflow-hidden border-4 border-green-100 dark:border-emerald-700 bg-green-200 dark:bg-emerald-800">
+        <img
+          src="https://github.com/shadcn.png"
+          alt={userData?.name || "Profile"}
+          className="w-full h-full object-cover"
         />
       </div>
-      <div className="-mt-20 space-x-4">
-        <div className="w-32 h-32 rounded-full overflow-hidden">
-          <img
-            src={"https://github.com/shadcn.png"}
-            alt={userData?.name || "Profile"}
-            className="w-full h-full object-cover"
-          />
-        </div>
-
-        <div>
-          <h1 className="text-3xl font-semibold text-neutral-800 dark:text-white">
-            {userData?.name || "User Name"}
-          </h1>
-          <p className="text-neutral-600 dark:text-gray-200 mt-2">
-            <strong>UserID:</strong> {userData?.userID}
-          </p>
-          <p className="text-neutral-600 dark:text-gray-200 mt-2">
+      <main className="flex-1 p-6 flex flex-col items-center w-full max-w-md">
+        <h1 className="text-4xl font-bold mb-2">{userData?.username}</h1>
+        <p className="text-lg mb-4">#{userData?.userID}</p>
+        <div className="bg-green-200 dark:bg-emerald-800 p-4 rounded-lg shadow-md w-full">
+          <p className="text-sm mb-2">
             <strong>Role:</strong> {userData?.role}
           </p>
-          <p className="text-neutral-600 dark:text-gray-200 mt-2">
-            <strong>Created At:</strong> {`${formatDate(userData?.createdAt || "").formattedDate} at ${formatDate(userData?.createdAt || "").formattedTime}`}
+          <p className="text-sm mb-2">
+            <strong>Created At:</strong>{" "}
+            {`${formatDate(userData?.createdAt || "").formattedDate} at ${formatDate(userData?.createdAt || "").formattedTime}`}
           </p>
-          <p className="text-neutral-600 dark:text-gray-200 mt-2">
-            <strong>Updated At:</strong> {`${formatDate(userData?.updatedAt || "").formattedDate} at ${formatDate(userData?.updatedAt || "").formattedTime}`}
+          <p className="text-sm">
+            <strong>Updated At:</strong>{" "}
+            {`${formatDate(userData?.updatedAt || "").formattedDate} at ${formatDate(userData?.updatedAt || "").formattedTime}`}
           </p>
         </div>
-      <Button onClick={handleLogout}>Log Out</Button>
-      </div>
+        <Button
+          onClick={handleLogout}
+          className="mt-6 bg-green-500 text-white dark:text-white dark:bg-emerald-600 hover:bg-green-600 dark:hover:bg-emerald-700 transition-colors rounded-lg py-2 px-4 text-lg"
+        >
+          Log Out
+        </Button>
+      </main>
     </div>
   );
 }

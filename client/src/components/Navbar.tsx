@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import useSignOut from "react-auth-kit/hooks/useSignOut";
 import DropdownMenuProfile from "./DropDownMenuProfile";
 import icon from "../assets/icon.svg";
 import { ModeToggle } from "./DarkModeToggle";
+import { User, LogOut, Users, Package, ShoppingBag } from "lucide-react";
+import { Button } from "./ui/button";
 
 type AuthUser = {
   name: string;
@@ -13,9 +15,15 @@ type AuthUser = {
 };
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const auth = useAuthUser<AuthUser>();
   const signOut = useSignOut();
+
+  const handleLogout = () => {
+    signOut();
+    navigate("/login");
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -46,26 +54,28 @@ export default function Navbar() {
               <NavLink
                 to="/totalUsers"
                 className={({ isActive }) =>
-                  `px-4 py-2 rounded text-xl ${
+                  `flex items-center transition-transform duration-300 ease-in-out hover:scale-105 space-x-2 px-4 py-2 rounded text-xl ${
                     isActive
                       ? "bg-green-500 text-white dark:bg-green-700 dark:text-white"
-                      : "text-gray-900 dark:text-gray-200 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-100"
+                      : "text-gray-900 dark:text-gray-200  hover:text-gray-900  dark:hover:text-gray-100"
                   }`
                 }
               >
-                Users
+                <Users className="w-6 h-6" />
+                <span>Users</span>
               </NavLink>
               <NavLink
                 to="/totalProducts"
                 className={({ isActive }) =>
-                  `px-4 py-2 rounded text-xl ${
+                  `flex items-center space-x-2 transition-transform duration-300 ease-in-out hover:scale-105 px-4 py-2 rounded text-xl ${
                     isActive
                       ? "bg-green-500 text-white dark:bg-green-700 dark:text-white"
-                      : "text-gray-900 dark:text-gray-200 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-100"
+                      : "text-gray-900 dark:text-gray-200  hover:text-gray-900  dark:hover:text-gray-100"
                   }`
                 }
               >
-                Products
+                <Package className="w-6 h-6" />
+                <span>Products</span>
               </NavLink>
             </>
           )}
@@ -74,26 +84,28 @@ export default function Navbar() {
               <NavLink
                 to="/products"
                 className={({ isActive }) =>
-                  `px-4 py-2 rounded text-xl ${
+                  `flex items-center space-x-2 transition-transform duration-300 ease-in-out hover:scale-105 px-4 py-2 rounded text-xl ${
                     isActive
                       ? "bg-green-500 text-white dark:bg-green-700 dark:text-white"
-                      : "text-gray-900 dark:text-gray-200 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-100"
+                      : "text-gray-900 dark:text-gray-200  hover:text-gray-900  dark:hover:text-gray-100"
                   }`
                 }
               >
-                Products
+                <ShoppingBag className="w-6 h-6" />
+                <span>Products</span>
               </NavLink>
               <NavLink
                 to="/userProducts"
                 className={({ isActive }) =>
-                  `px-4 py-2 rounded text-xl ${
+                  `flex items-center space-x-2 transition-transform duration-300 ease-in-out hover:scale-105 px-4 py-2 rounded text-xl ${
                     isActive
                       ? "bg-green-500 text-white dark:bg-green-700 dark:text-white"
-                      : "text-gray-900 dark:text-gray-200 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-100"
+                      : "text-gray-900 dark:text-gray-200  hover:text-gray-900  dark:hover:text-gray-100"
                   }`
                 }
               >
-                Your Products
+                <Package className="w-6 h-6" />
+                <span>Your Products</span>
               </NavLink>
             </>
           )}
@@ -102,9 +114,13 @@ export default function Navbar() {
         <div className="hidden md:flex items-center space-x-2 text-xl">
           {auth ? (
             <>
-              <span className="text-gray-900 dark:text-gray-200">
-                {auth.name}
-              </span>
+              <Link
+                to={"/MyProfile"}
+                className="flex items-center space-x-2 text-gray-900 dark:text-gray-200 hover:text-green-500 dark:hover:text-emerald-600 transition-colors duration-300 text-2xl"
+              >
+                <User className="w-6 h-6" />
+                <span>{auth.name}</span>
+              </Link>
               <DropdownMenuProfile />
             </>
           ) : (
@@ -115,7 +131,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 bg-green-100 dark:bg-emerald-950 flex flex-col items-center justify-center space-y-4 p-6 z-50 md:hidden transform transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-0 bg-green-100 dark:bg-emerald-950 flex flex-col items-start justify-start space-y-4 p-6 z-50 md:hidden transform transition-transform duration-300 ease-in-out ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -131,28 +147,30 @@ export default function Navbar() {
             <NavLink
               to="/totalUsers"
               className={({ isActive }) =>
-                `text-xl px-4 py-2 rounded-xl ${
+                `flex items-center transition-transform duration-300 ease-in-out hover:scale-105 space-x-2 text-xl px-4 py-2 rounded-xl ${
                   isActive
                     ? "bg-green-500 text-white dark:bg-green-700 dark:text-white"
-                    : "text-gray-900 dark:text-gray-200 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-100"
+                    : "text-gray-900 dark:text-gray-200  hover:text-gray-900  dark:hover:text-gray-100"
                 }`
               }
               onClick={toggleMenu}
             >
-              Users
+              <Users className="w-6 h-6" />
+              <span>Users</span>
             </NavLink>
             <NavLink
               to="/totalProducts"
               className={({ isActive }) =>
-                `text-xl px-4 py-2 rounded-xl ${
+                `flex items-center transition-transform duration-300 ease-in-out hover:scale-105 space-x-2 text-xl px-4 py-2 rounded-xl ${
                   isActive
                     ? "bg-green-500 text-white dark:bg-green-700 dark:text-white"
-                    : "text-gray-900 dark:text-gray-200 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-100"
+                    : "text-gray-900 dark:text-gray-200  hover:text-gray-900  dark:hover:text-gray-100"
                 }`
               }
               onClick={toggleMenu}
             >
-              Products
+              <Package className="w-6 h-6" />
+              <span>Products</span>
             </NavLink>
           </>
         )}
@@ -161,51 +179,65 @@ export default function Navbar() {
             <NavLink
               to="/products"
               className={({ isActive }) =>
-                `text-xl px-4 py-2 rounded-xl ${
+                `flex items-center transition-transform duration-300 ease-in-out hover:scale-105 space-x-2 text-xl px-4 py-2 rounded-xl ${
                   isActive
                     ? "bg-green-500 text-white dark:bg-green-700 dark:text-white"
-                    : "text-gray-900 dark:text-gray-200 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-100"
+                    : "text-gray-900 dark:text-gray-200  hover:text-gray-900  dark:hover:text-gray-100"
                 }`
               }
               onClick={toggleMenu}
             >
-              Products
+              <ShoppingBag className="w-6 h-6" />
+              <span>Products</span>
             </NavLink>
             <NavLink
               to="/userProducts"
               className={({ isActive }) =>
-                `text-xl px-4 py-2 rounded-xl ${
+                `flex items-center transition-transform duration-300 ease-in-out hover:scale-105 space-x-2 text-xl px-4 py-2 rounded-xl ${
                   isActive
                     ? "bg-green-500 text-white dark:bg-green-700 dark:text-white"
-                    : "text-gray-900 dark:text-gray-200 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-100"
+                    : "text-gray-900 dark:text-gray-200  hover:text-gray-900  dark:hover:text-gray-100"
                 }`
               }
               onClick={toggleMenu}
             >
-              Your Products
+              <Package className="w-6 h-6" />
+              <span>Your Products</span>
             </NavLink>
           </>
         )}
-        <div className="text-xl">
+        <div className="text-xl space-y-2">
           {auth ? (
-            <NavLink
-              to={"/MyProfile"}
-              className={({ isActive }) =>
-                `text-xl px-4 py-2 rounded-xl ${
-                  isActive
-                    ? "bg-green-500 text-white dark:bg-green-700 dark:text-white"
-                    : "text-gray-900 dark:text-gray-200 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-100"
-                }`
-              }
-              onClick={toggleMenu}
-            >
-              Your Profile
-            </NavLink>
+            <>
+              <NavLink
+                to={"/MyProfile"}
+                className={({ isActive }) =>
+                  `flex items-center space-x-2 transition-transform duration-300 ease-in-out hover:scale-105 text-xl px-4 py-2 rounded-xl ${
+                    isActive
+                      ? "bg-green-500 text-white dark:bg-green-700 dark:text-white"
+                      : "text-gray-900 dark:text-gray-200  hover:text-gray-900  dark:hover:text-gray-100"
+                  }`
+                }
+                onClick={toggleMenu}
+              >
+                <User className="w-6 h-6" />
+                <span>Your Profile</span>
+              </NavLink>
+              <Button
+                className="flex items-center space-x-2 transition-transform duration-300 ease-in-out hover:scale-105 text-xl px-4 py-2 rounded-xl mt-4 bg-transparent dark:bg-transparent dark:text-white text-gray-600 hover:bg-red-600  dark:hover:bg-red-800"
+                onClick={handleLogout}
+              >
+                <LogOut className="w-6 h-6" />
+                <span>Logout</span>
+              </Button>
+            </>
           ) : (
             <span className="text-gray-900 dark:text-gray-200">Loading...</span>
           )}
         </div>
-        <ModeToggle />
+        <span className="ml-4">
+          <ModeToggle />
+        </span>
       </div>
     </nav>
   );

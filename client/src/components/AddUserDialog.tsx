@@ -42,7 +42,7 @@ export function AdduserDialog({
       setPassword("");
     } catch {
       showMessage({
-        message: "Error adding product",
+        message: "Error adding user, check the fields and try again",
         type: ToastType.ERROR,
       });
       setName("");
@@ -63,9 +63,9 @@ export function AdduserDialog({
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add a new product to the database.</DialogTitle>
+          <DialogTitle>Add a new user to the database.</DialogTitle>
           <DialogDescription>
-            Fill in the details to add a new product.
+            Fill in the details to add a new user.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">

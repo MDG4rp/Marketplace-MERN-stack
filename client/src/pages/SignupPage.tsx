@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Register from "@/components/Register";
 export default function SignupPage() {
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-full">
       <div className="w-full p-6 rounded-lg flex flex-col items-center justify-center">
         <h1 className="text-2xl text-center font-bold mb-6">
           Sign up!
