@@ -43,6 +43,7 @@ import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import Auth from "@/api/models/Auth";
 import { useToastProvider } from "@/api/context/ToastContext";
 import { ToastType } from "@/api/models/ToastContext";
+import { AdduserDialog } from "./AddUserDialog";
 const handleDeleteUser = (userId: string) => {
   console.log(userId);
   deleteUser(userId).then(getAllUsers);
@@ -374,25 +375,24 @@ export function DataTable({ data }: { data: UserInfo[] }) {
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-center space-x-2 mt-6">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-          className="dark:bg-green-700 hover:bg-green-700 text-white bg-green-500 dark:hover:bg-green-700"
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-          className="dark:bg-green-700 hover:bg-green-700 bg-green-500 text-white dark:hover:bg-green-700"
-        >
-          Next
-        </Button>
+      <div className="relative w-full flex items-center mt-6">
+        <AdduserDialog onUserChange={handleRefresh} />
+        <div className="flex justify-center w-full space-x-2 mr-[6rem]">
+          <Button
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+            className="dark:bg-green-700 hover:bg-green-700 text-white bg-green-500 dark:hover:bg-green-900 dark:text-white"
+          >
+            Previous
+          </Button>
+          <Button
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+            className="dark:bg-green-700 hover:bg-green-700 bg-green-500 text-white dark:hover:bg-green-900 dark:text-white"
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );

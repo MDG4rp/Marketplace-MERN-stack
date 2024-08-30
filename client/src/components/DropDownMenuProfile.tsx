@@ -12,7 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ModeToggle } from "./DarkModeToggle";
 import { useToastProvider } from "@/api/context/ToastContext";
 import { ToastType } from "@/api/models/ToastContext";
-
+import { LogOut, User } from "lucide-react";
 export default function DropdownMenuProfile() {
   const { showMessage } = useToastProvider();
   const signOut = useSignOut();
@@ -40,14 +40,17 @@ export default function DropdownMenuProfile() {
           My Account
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Link to={"MyProfile"}>
-          <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
+        <Link to={"MyProfile"} >
+          <DropdownMenuItem className="cursor-pointer">
+            <User className="mr-2 h-4 w-4" />
+            <span>Profile</span>
+          </DropdownMenuItem>
         </Link>
-        <DropdownMenuItem className="cursor-pointer" onClick={handleLogout}>
-          Logout
+        <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
+          <LogOut className="mr-2 h-4 w-4" />
+          <span>Log out</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-
         <DropdownMenuLabel className="cursor-default">Theme</DropdownMenuLabel>
         <span className="flex justify-center">
           <ModeToggle />
