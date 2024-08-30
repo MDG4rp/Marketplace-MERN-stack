@@ -34,7 +34,7 @@ Benvenuto nel nostro **Marketplace Full-Stack**! 🚀 Un'applicazione moderna e 
 
 1. **Clona il repository:**
    ```bash
-   git clone https://github.com/tuo-username/marketplace-fullstack.git
+   git clone https://github.com/MDG4rp/Fullstack-MERN-Project
    ```
 2. **Installa le dipendenze del frontend:**
    ```bash
