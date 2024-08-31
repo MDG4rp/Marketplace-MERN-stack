@@ -1,23 +1,23 @@
-import "./index.css";
+import "@/index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AuthProvider from "react-auth-kit";
 import createStore from "react-auth-kit/createStore";
 import AuthOutlet from "@auth-kit/react-router/AuthOutlet";
-import Products from "./pages/Products";
-import AdminDashboard from "./pages/AdminDashboard";
-import AdminManagement from "./pages/AdminManagement";
+import Products from "@/pages/user/Shop";
+import AdminDashboard from "@/pages/admin/Products";
+import AdminManagement from "@/pages/admin/Users";
 import refresh from "@/lib/refresh";
-import Layout from "./components/Layout";
-import HomePage from "./pages/HomePage";
+import Layout from "@/components/Layout";
+import HomePage from "@/pages/HomePage";
 import { ThemeProvider } from "@/api/context/ThemeContext";
-import ExternalLayout from "./components/ExternalLayout";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
-import { PrivateRoute } from "./routes/PrivateRoute";
-import UserProducts from "./pages/UserProducts";
-import NotFoundPage from "./pages/NotFoundPage";
-import UserPage from "./pages/UserPage";
-import { ToastProvider } from "./api/context/ToastContext";
+import ExternalLayout from "@/components/ExternalLayout";
+import LoginPage from "@/pages/LoginPage";
+import SignupPage from "@/pages/SignupPage";
+import { PrivateRoute } from "@/routes/PrivateRoute";
+import UserProducts from "@/pages/user/Inventory";
+import NotFoundPage from "@/pages/NotFoundPage";
+import UserPage from "@/pages/UserPage";
+import { ToastProvider } from "@/api/context/ToastContext";
 const store = createStore({
   authName: "_auth",
   authType: "cookie",
@@ -58,7 +58,7 @@ export default function App() {
                     }
                   />
                   <Route
-                    path="/products"
+                    path="/shop"
                     element={
                       <PrivateRoute requiredRole="user">
                         <Products />
@@ -66,7 +66,7 @@ export default function App() {
                     }
                   />
                   <Route
-                    path="/userProducts"
+                    path="/inventory"
                     element={
                       <PrivateRoute requiredRole="user">
                         <UserProducts />

@@ -38,12 +38,14 @@ export function RemoveProductDialog({ product }: ProductDialogProps) {
           message: "Product removed successfully",
           type: ToastType.SUCCESS,
         });
+        setQuantity(1);
       }
     } catch {
       showMessage({
         message: "Error removing product",
         type: ToastType.ERROR,
       });
+      setQuantity(1);
     }
   };
 
@@ -64,7 +66,7 @@ export function RemoveProductDialog({ product }: ProductDialogProps) {
         <DialogHeader>
           <DialogTitle>Remove this product</DialogTitle>
           <DialogDescription>
-            Confirm the removal of the product
+            Set the quantity of the product you want to remove.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -100,6 +102,8 @@ export function RemoveProductDialog({ product }: ProductDialogProps) {
               id="quantity"
               type="number"
               value={quantity}
+              min={1}
+              max={product.quantity}
               onChange={(e) => setQuantity(Number(e.target.value))}
               className="col-span-3 dark:text-black focus:ring-green-700"
               placeholder={quantity.toString()}

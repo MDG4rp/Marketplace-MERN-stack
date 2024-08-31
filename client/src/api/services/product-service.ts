@@ -1,18 +1,13 @@
 import Product from "../models/Product";
 import { axiosInstance } from "@/lib/axios";
 import mapProducts from "../mappers/products-mapper";
+import { PaginationParams } from "@/api/models/PaginationParams";
 const api = import.meta.env.VITE_API_URL;
-
-interface PaginationParams {
-  search?: string;
-  page?: number;
-  limit?: number;
-}
 
 export function getAllProducts({
   search,
-  page = 1,
-  limit = 5,
+  page,
+  limit ,
 }: PaginationParams) {
   return axiosInstance
     .get(`${api}/products`, {

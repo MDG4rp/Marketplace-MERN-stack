@@ -82,7 +82,7 @@ export default function Navbar() {
           {auth?.role === "user" && (
             <>
               <NavLink
-                to="/products"
+                to="/shop"
                 className={({ isActive }) =>
                   `flex items-center space-x-2 transition-transform duration-300 ease-in-out hover:scale-105 px-4 py-2 rounded text-xl ${
                     isActive
@@ -92,10 +92,10 @@ export default function Navbar() {
                 }
               >
                 <ShoppingBag className="w-6 h-6" />
-                <span>Products</span>
+                <span>Shop</span>
               </NavLink>
               <NavLink
-                to="/userProducts"
+                to="/inventory"
                 className={({ isActive }) =>
                   `flex items-center space-x-2 transition-transform duration-300 ease-in-out hover:scale-105 px-4 py-2 rounded text-xl ${
                     isActive
@@ -105,7 +105,7 @@ export default function Navbar() {
                 }
               >
                 <Package className="w-6 h-6" />
-                <span>Your Products</span>
+                <span>Inventory</span>
               </NavLink>
             </>
           )}
@@ -116,10 +116,10 @@ export default function Navbar() {
             <>
               <Link
                 to={"/MyProfile"}
-                className="flex items-center space-x-2 text-gray-900 dark:text-gray-200 hover:text-green-500 dark:hover:text-emerald-600 transition-colors duration-300 text-2xl"
+                className="flex items-center space-x-2 text-gray-900 dark:text-gray-200 hover:text-green-500 dark:hover:text-emerald-600 transition-colors duration-300 text-xl"
               >
-                <User className="w-6 h-6" />
-                <span>{auth.name}</span>
+                
+                <span className=" underline">Your Account</span>
               </Link>
               <DropdownMenuProfile />
             </>
@@ -177,7 +177,7 @@ export default function Navbar() {
         {auth?.role === "user" && (
           <>
             <NavLink
-              to="/products"
+              to="/shop"
               className={({ isActive }) =>
                 `flex items-center transition-transform duration-300 ease-in-out hover:scale-105 space-x-2 text-xl px-4 py-2 rounded-xl ${
                   isActive
@@ -188,10 +188,10 @@ export default function Navbar() {
               onClick={toggleMenu}
             >
               <ShoppingBag className="w-6 h-6" />
-              <span>Products</span>
+              <span>Shop</span>
             </NavLink>
             <NavLink
-              to="/userProducts"
+              to="/inventory"
               className={({ isActive }) =>
                 `flex items-center transition-transform duration-300 ease-in-out hover:scale-105 space-x-2 text-xl px-4 py-2 rounded-xl ${
                   isActive
@@ -202,7 +202,7 @@ export default function Navbar() {
               onClick={toggleMenu}
             >
               <Package className="w-6 h-6" />
-              <span>Your Products</span>
+              <span>Inventory</span>
             </NavLink>
           </>
         )}

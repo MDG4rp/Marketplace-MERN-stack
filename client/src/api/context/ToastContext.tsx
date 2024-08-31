@@ -30,7 +30,7 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
       timeout = setTimeout(() => {
         setIsExiting(true);
         setTimeout(() => setIsOpen(false), 500);
-      }, 4000);
+      }, 3000);
     }
     return () => clearTimeout(timeout);
   }, [isOpen]);

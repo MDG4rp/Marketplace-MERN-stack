@@ -43,7 +43,7 @@ export default function Login() {
           message: "Login successfully",
           type: ToastType.SUCCESS,
         });
-        navigate(role === "admin" ? "/totalUsers" : "/products");
+        navigate(role === "admin" ? "/totalUsers" : "/shop");
       } else {
         showMessage({
           message: "Failed to sign in, check your credentials",
