@@ -73,17 +73,17 @@ export default function UserPage() {
       </div>
       <main className="flex-1 p-6 flex flex-col items-center w-full max-w-md">
         <h1 className="text-4xl font-bold mb-2">{userData?.username}</h1>
-        <p className="text-lg mb-4">#{userData?.userID}</p>
+        <p className="text-lg mb-4"># {userData?.userID}</p>
         <div className="bg-green-200 dark:bg-emerald-800 p-4 rounded-lg shadow-md w-full">
           <p className="text-sm mb-2">
             <strong>Role:</strong> {userData?.role}
           </p>
           <p className="text-sm mb-2">
-            <strong>Created At:</strong>{" "}
+            <strong>Created: </strong>{" "}
             {`${formatDate(userData?.createdAt || "").formattedDate} at ${formatDate(userData?.createdAt || "").formattedTime}`}
           </p>
           <p className="text-sm">
-            <strong>Updated At:</strong>{" "}
+            <strong>Last Update: :</strong>{" "}
             {`${formatDate(userData?.updatedAt || "").formattedDate} at ${formatDate(userData?.updatedAt || "").formattedTime}`}
           </p>
         </div>
