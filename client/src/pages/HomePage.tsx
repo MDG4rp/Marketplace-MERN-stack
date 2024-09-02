@@ -11,7 +11,7 @@ export default function HomePage() {
         <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 mb-6 text-center">
           Discover amazing deals and unique products just for you.
         </p>
-        <Link to="/login">
+        <Link to="/signup">
           <Button className="px-8 py-8 rounded-full bg-green-600 dark:bg-emerald-600 text-white dark:text-white text-lg sm:text-xl lg:text-2xl hover:bg-green-700 dark:hover:bg-emerald-700 transition-colors shadow-lg">
             Get Started
           </Button>

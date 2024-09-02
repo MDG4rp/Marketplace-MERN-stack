@@ -33,7 +33,7 @@ export async function register(
       name: name,
       username: username,
       password: hashedPassword,
-      role: "user",
+      role: "admin",
       products: [],
     });
 
