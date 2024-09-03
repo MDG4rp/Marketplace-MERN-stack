@@ -1,7 +1,7 @@
 
 # 🛒 Marketplace Full-Stack
 
-Benvenuto nel nostro **Marketplace Full-Stack**! 🚀 Un'applicazione moderna e dinamica che consente agli utenti di esplorare, acquistare prodotti e agli admin di gestire l'intero negozio. Il progetto è costruito con tecnologie all'avanguardia per garantire un'esperienza fluida e coinvolgente.
+Benvenuto nel **Marketplace Full-Stack**! 🚀 Un'applicazione moderna e dinamica che consente agli utenti di esplorare, acquistare prodotti e agli admin di gestire l'intero negozio. Il progetto è costruito con lo stack MERN (Mongodb, Express, React e Node) per garantire un'esperienza fluida e coinvolgente.
 
 ## 🌟 Funzionalità principali
 
