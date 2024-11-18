@@ -151,12 +151,13 @@ export async function userAddsProduct(
     if (existingProduct) {
       existingProduct.quantity += quantity;
     } else {
-      user.products.push({
+      const newProduct: Partial<ProductDocument> = {
         name,
         quantity: Number(quantity),
         price,
         image,
-      });
+      };
+      user.products.push(newProduct as ProductDocument);
     }
 
     await user.save();
@@ -165,7 +166,6 @@ export async function userAddsProduct(
     res.status(500).json({ message: (error as Error).message });
   }
 }
-
 export async function updateProduct(
   req: UpdateProductRequest,
   res: Response
